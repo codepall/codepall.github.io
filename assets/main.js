@@ -11,17 +11,17 @@ function cekKhodam(event) {
         const randomStatus = Math.floor(Math.random() * status.length);
         if (randomStatus === 0) {
             let khodam = [
-                'Raffa😎'
-                'Akhdan🤓'
-                'Raffa😎'
-                'Akhdan🤓'
-                'Raffa😎'
-                'Akhdan🤓'
-                'Raffa😎'
-                'Akhdan🤓'
-                'Raffa😎'
-                'Akhdan🤓'
-                'Raffa😎'
+                'Raffa'
+                'Akhdan'
+                'Raffa'
+                'Akhdan'
+                'Raffa'
+                'Akhdan'
+                'Raffa'
+                'Akhdan'
+                'Raffa'
+                'Akhdan'
+                'Raffa'
             ];
             const random = Math.floor(Math.random() * khodam.length);
             $('#result').html(`${nama.toUpperCase()} - Khodam Kamu (${khodam[random]})`);
