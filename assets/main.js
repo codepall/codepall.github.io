@@ -11,18 +11,9 @@ function cekKhodam(event) {
         const randomStatus = Math.floor(Math.random() * status.length);
         if (randomStatus === 0) {
             let khodam = [
-                'Jinn ⚸',
-                'Syaitan ♄',
-                'Malaikat ☽',
-                'Peri ♀',
-                'Naga ☍',
-                'Setan ⚸',
-                'Hantu ☉',
-                'Jin ⚹',
-                'Iblis ☌',
-                'Kuntilanak ♃',
-                'Pocong ♂'
-                'Raffa'
+                'Raffa😎'
+                'Akhdan🤓'
+                'Raffa😎'
                 'Akhdan🤓'
             ];
             const random = Math.floor(Math.random() * khodam.length);
