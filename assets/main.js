@@ -22,13 +22,15 @@ function cekKhodam(event) {
                 'Iblis ☌',
                 'Kuntilanak ♃',
                 'Pocong ♂'
+                'Raffa'
+                'Akhdan🤓'
             ];
             const random = Math.floor(Math.random() * khodam.length);
             $('#result').html(`${nama.toUpperCase()} - Khodam Kamu (${khodam[random]})`);
             $('#search').val('');
         }
         else {
-            $('#result').html(`${nama.toUpperCase()} - Kosong`);
+            $('#result').html(`${nama.toUpperCase()} - KOSONG`);
             $('#search').val('');
         }
     }
