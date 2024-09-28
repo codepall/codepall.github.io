@@ -30,7 +30,7 @@ function cekKhodam(event) {
             $('#search').val('');
         }
         else {
-            $('#result').html(`${nama.toUpperCase()} - Raffa🤓`);
+            $('#result').html(`${nama.toUpperCase()} - Kosong`);
             $('#search').val('');
         }
     }
