@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Khodam Anda - Edisi Super Mistis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300;500;700&family=Spectral:ital,wght@0,200;0,400;1,200;1,400&family=Lobster+Two:ital@0;1&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c0e37;
+            --secondary-color: #8a4fff;
+            --accent-color: #ff6b6b;
+            --bg-color: #120118;
+            --text-color: #e0e0e0;
+            --glow-color: #ff00ff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            75% { transform: translateY(20px) rotate(-5deg); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--glow-color)); }
+            50% { filter: drop-shadow(0 0 25px var(--glow-color)); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(45deg, #120118, #2c0e37, #3a1145, #4b1763);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--accent-color);
+            text-align: center;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px var(--secondary-color),
+                         0 0 20px var(--glow-color),
+                         0 0 30px var(--glow-color);
+            animation: glowPulse 3s infinite;
+        }
+
+        .form-container {
+            background: rgba(44, 14, 55, 0.8);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 0 50px rgba(138, 79, 255, 0.5);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-family: 'Philosopher', sans-serif;
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--secondary-color);
+            background-color: rgba(18, 1, 24, 0.6);
+            color: var(--text-color);
+            border-radius: 15px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+color: var(--bg-color);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 2rem auto 0;
+            font-family: 'Lobster Two', cursive;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+
+        button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 30px var(--glow-color);
+        }
+
+        #result {
+            margin-top: 3rem;
+            padding: 3rem;
+            background: linear-gradient(45deg, rgba(44, 14, 55, 0.9), rgba(138, 79, 255, 0.6));
+            border-radius: 25px;
+            font-family: 'Spectral', serif;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px var(--glow-color);
+        }
+
+        #result.show {
+            opacity: 1;
+        }
+
+        .khodam-icon {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            display: block;
+        }
+
+        .float-animation {
+            animation: floatAnimation 6s ease-in-out infinite, glowPulse 4s linear infinite;
+        }
+
+        .mystic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+        }
+
+        #khodam-name {
+            font-size: 3.5rem;
+            margin: 1rem 0;
+            font-weight: 900;
+            letter-spacing: 3px;
+            font-family: 'Cinzel Decorative', cursive;
+            background: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        #khodam-description {
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.8;
+            font-size: 1.2rem;
+            color: #f0f0f0;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        .mystic-symbol {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.2;
+            pointer-events: none;
+            animation: floatAnimation 20s infinite;
+        }
+
+        .decorative-border {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 3px solid var(--accent-color);
+            border-radius: 35px;
+            pointer-events: none;
+            animation: glowPulse 4s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="mystic-bg" id="mystic-bg"></div>
+    <div class="container">
+        <h1>Cek Khodam Anda</h1>
+        <div class="form-container">
+            <div class="decorative-border"></div>
+            <form id="khodamForm">
+                <div class="input-group">
+                    <label for="name">Nama Lengkap:</label>
+                    <input type="text" id="name" name="name" required placeholder="Masukkan nama Anda...">
+                </div>
+                <button type="submit">Temukan Khodam Anda</button>
+            </form>
+        </div>
+        <div id="result"></div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+        const khodamForm = document.getElementById('khodamForm');
+        const resultDiv = document.getElementById('result');
+        const mysticBg = document.getElementById('mystic-bg');
+
+        const khodamTypes = [
+            { name: 'Api Abadi', element: 'Fire', color: '#FF4500', description: 'Khodam Api Abadi membara dengan semangat dan hasrat yang tak pernah padam. Ia memberimu kekuatan untuk mengatasi segala rintangan dan menerangi jalan menuju kesuksesan.' },
+            { name: 'Ombak Perkasa', element: 'Water', color: '#1E90FF', description: 'Khodam Ombak Perkasa mengalir dengan kebijaksanaan yang dalam. Ia membantumu beradaptasi dengan perubahan dan menemukan ketenangan di tengah badai kehidupan.' },
+            { name: 'Akar Kehidupan', element: 'Earth', color: '#8B4513', description: 'Khodam Akar Kehidupan memberimu kekuatan dan stabilitas. Ia membantumu tetap teguh dalam menghadapi tantangan dan tumbuh menjadi versi terbaik dirimu.' },
+            { name: 'Angin Penyejuk', element: 'Wind', color: '#90EE90', description: 'Khodam Angin Penyejuk membawa perubahan dan kebebasan. Ia membantu pikiranmu tetap jernih dan komunikasimu mengalir dengan lembut namun penuh makna.' },
+            { name: 'Petir Pembangkit', element: 'Lightning', color: '#FFD700', description: 'Khodam Petir Pembangkit membawa inspirasi mendadak dan transformasi cepat. Ia membuatmu bertindak dengan tepat dan cepat, mewujudkan ide-ide brilian.' },
+            { name: 'Cahaya Ilahi', element: 'Light', color: '#FFFFE0', description: 'Khodam Cahaya Ilahi membawa pencerahan dan kebenaran. Ia membantumu melihat keindahan dalam segala hal dan menemukan jalan spiritualmu yang sejati.' },
+            { name: 'Bayangan Malam', element: 'Dark', color: '#4B0082', description: 'Khodam Bayangan Malam membawa misteri dan transformasi. Ia membantumu menghadapi ketakutan terdalammu dan menemukan kekuatan tersembunyi dalam dirimu.' },
+        ];
+
+        function getRandomKhodam() {
+            return khodamTypes[Math.floor(Math.random() * khodamTypes.length)];
+        }
+
+        function createKhodamSVG(khodam) {
+            return 
+                <svg class="khodam-icon float-animation" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="khodamGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" style="stop-color:${khodam.color};stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:${khodam.color};stop-opacity:0.6" />
+                        </radialGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <circle cx="50" cy="50" r="45" fill="url(#khodamGradient)" filter="url(#glow)" />
+                    <path d="M50 10 L90 90 L10 90 Z" fill="${khodam.color}" opacity="0.7" filter="url(#glow)" />
+                    <text x="50" y="55" font-size="14" text-anchor="middle" fill="white" font-family="Cinzel Decorative" filter="url(#glow)">${khodam.element}</text>
+                </svg>
+            ;
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = ${Math.random() * 100}%;
+                particle.style.top = ${Math.random() * 100}%;
+                particle.style.animationDelay = ${Math.random() * 3}s;
+                mysticBg.appendChild(particle);
+            }
+        }
+function addMysticSymbols() {
+            const symbols = ['☿', '♃', '♄', '☽', '♀', '☉', '♂', '⚸', '☍', '☌', '⚹'];
+            symbols.forEach(symbol => {
+                const elem = document.createElement('div');
+                elem.textContent = symbol;
+                elem.classList.add('mystic-symbol');
+                elem.style.left = ${Math.random() * 100}%;
+                elem.style.top = ${Math.random() * 100}%;
+                document.body.appendChild(elem);
+            });
+        }
+
+        createParticles();
+        addMysticSymbols();
+
+        khodamForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+
+            const khodam = getRandomKhodam();
+            const khodamSVG = createKhodamSVG(khodam);
+
+            resultDiv.innerHTML = 
+                ${khodamSVG}
+                <p>Wahai ${name}, khodam yang menyertai perjalanan hidupmu adalah:</p>
+                <h2 id="khodam-name" style="color: ${khodam.color}">${khodam.name}</h2>
+                <p id="khodam-description">${khodam.description}</p>
+            ;
+
+            resultDiv.classList.add('show');
+
+            gsap.fromTo("#result", 
+                { y: 100, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.5, ease: "power3.out" }
+            );
+
+            gsap.fromTo(".khodam-icon", 
+                { scale: 0, rotation: -360 },
+                { scale: 1, rotation: 0, duration: 2, ease: "elastic.out(1, 0.3)" }
+            );
+
+            gsap.fromTo("#khodam-name", 
+                { letterSpacing: "30px", opacity: 0 },
+                { letterSpacing: "3px", opacity: 1, duration: 1.5, delay: 0.5, ease: "power2.out" }
+            );
+
+            gsap.fromTo("#khodam-description", 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.5, delay: 1, ease: "power2.out" }
+            );
+
+            // Add sparkle effect
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('particle');
+                sparkle.style.left = ${Math.random() * 100}%;
+                sparkle.style.top = ${Math.random() * 100}%;
+                resultDiv.appendChild(sparkle);
+
+                gsap.fromTo(sparkle, 
+                    { scale: 0, opacity: 0 },
+                    { 
+                        scale: 1, 
+                        opacity: 1, 
+                        duration: 0.5 + Math.random(), 
+                        delay: 1 + Math.random() * 2,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "power1.inOut"
+                    }
+                );
+            }
+        });
+
+        // Add continuous floating animation to mystic symbols
+        gsap.to('.mystic-symbol', {
+            y: "random(-20, 20)",
+            x: "random(-20, 20)",
+            rotation: "random(-15, 15)",
+            duration: "random(3, 7)",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            stagger: {
+                each: 0.2,
+                from: "random"
+            }
+        });
+
+        // Add pulsating glow to form container
+        gsap.to('.form-container', {
+            boxShadow: '0 0 30px rgba(138, 79, 255, 0.8)',
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        // Add subtle hover effect to input
+        const nameInput = document.getElementById('name');
+        nameInput.addEventListener('mouseenter', () => {
+            gsap.to(nameInput, { scale: 1.05, duration: 0.3, ease: "power2.out" });
+        });
+        nameInput.addEventListener('mouseleave', () => {
+            gsap.to(nameInput, { scale: 1, duration: 0.3, ease: "power2.out" });
+        });
+// Add particle burst on button click
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.addEventListener('click', (e) => {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                document.body.appendChild(particle);
+
+                gsap.fromTo(particle, 
+                    {
+                        x: e.clientX,
+                        y: e.clientY,
+                        scale: 0.1,
+                        opacity: 1
+                    },
+                    {
+                        x: e.clientX + (Math.random() - 0.5) * 200,
+                        y: e.clientY + (Math.random() - 0.5) * 200,
+                        scale: 0,
+                        opacity: 0,
+                        duration: 1 + Math.random(),
+                        ease: "power2.out",
+                        onComplete: () => particle.remove()
+                    }
+                );
+            }
+        });
+    </script>
+</body>
+</html>
