@@ -27,6 +27,6 @@
       var hide = document.getElementById("fakesite");
       hide.style.display = "none";
 	  show.style.display = "block";
-      document.getElementById("message").innerHTML = "<h1><strong><em>WELCOME TO DARKNET!</em></strong></h1>"
+      document.getElementById("message").innerHTML = "<h1><strong><em>Sori guys kalian kenal preng🤣</em></strong></h1>"
    };
    
