@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marson Project - Spesialis Algoritma Internet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #8B0000, #DC143C, #FF0000); /* Gradien merah untuk efek liquid */
+            background-size: 400% 400%;
+            animation: liquidGlass 10s ease-in-out infinite; /* Animasi liquid glass */
+            color: white;
+        }
+        
+        @keyframes liquidGlass {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        header {
+            background: rgba(255, 0, 0, 0.8); /* Transparansi untuk efek kaca */
+            backdrop-filter: blur(10px); /* Efek blur kaca */
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1); /* Transparansi untuk efek kaca */
+            backdrop-filter: blur(5px);
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about, .services, .founder, .contact {
+            background: rgba(0, 0, 0, 0.5); /* Overlay gelap untuk kontras */
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 20px;
+        }
+        
+        .founder img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #FF0000;
+        }
+        
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        button {
+            background: #FF0000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Marson Project</h2>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#founder">Founder</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="home" class="hero">
+        <div>
+            <h1>Marson Project</h1>
+            <p>Spesialis dalam Pengembangan Algoritma Internet yang Inovatif dan Profesional</p>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <h2>Tentang Kami</h2>
+        <p>Marson Project adalah perusahaan terdepan di bidang internet, fokus pada pembuatan algoritma canggih untuk optimasi data, kecerdasan buatan, dan solusi digital. Kami berkomitmen untuk memberikan hasil yang akurat, efisien, dan inovatif.</p>
+    </section>
+    
+    <section id="services" class="services">
+        <h2>Layanan Kami</h2>
+        <ul>
+            <li>Pengembangan Algoritma Kecerdasan Buatan</li>
+            <li>Optimasi Algoritma untuk Big Data</li>
+            <li>Konsultasi Algoritma Internet</li>
+            <li>Pengujian dan Debugging Algoritma</li>
+        </ul>
+    </section>
+    
+    <section id="founder" class="founder">
+        <h2>Founder</h2>
+        <img src="https://via.placeholder.com/150" alt="Marson de Edison"> <!-- Ganti dengan foto asli -->
+        <h3>Marson de Edison</h3>
+        <p>Sebagai founder Marson Project, Marson de Edison adalah ahli algoritma dengan pengalaman lebih dari 10 tahun di industri internet. Ia memimpin tim untuk menciptakan solusi algoritma yang revolusioner.</p>
+    </section>
+    
+    <section id="contact" class="contact">
+        <h2>Kontak Kami</h2>
+        <form>
+            <input type="text" placeholder="Nama Anda" required>
+            <input type="email" placeholder="Email Anda" required>
+            <textarea placeholder="Pesan Anda" rows="5" required></textarea>
+            <button type="submit">Kirim</button>
+        </form>
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 Marson Project. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Animasi sederhana untuk scroll smooth
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
