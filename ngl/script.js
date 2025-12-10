@@ -89,8 +89,7 @@ document.getElementById('spamForm').addEventListener('submit', function(event) {
         }
 
         startButton.disabled = false;
-        statusText.textContent = `Selesai!
-        Gagal🥀: ${sentCount}, Berhasil🔥: ${failedCount}`;
+        statusText.textContent = `Selesai! Gagal🥀: ${sentCount}, Berhasil🔥: ${failedCount}`;
         loaderBar.style.width = '100%';
     }
 
