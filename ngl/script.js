@@ -79,7 +79,7 @@ document.getElementById('spamForm').addEventListener('submit', function(event) {
                 }
             });
 
-            statusText.textContent = `⌛Mengirim.. (${sentCount + failedCount}/${messageCount}) Berhasil: ${sentCount}, Gagal: ${failedCount}`;
+            statusText.textContent = `⌛Mengirim.. (${sentCount + failedCount}/${messageCount}) Gagal: ${sentCount}, Berhasil: ${failedCount}`;
             loaderBar.style.width = `${((sentCount + failedCount) / messageCount) * 100}%`;
 
             // Tunggu sebentar sebelum gelombang berikutnya
@@ -89,7 +89,8 @@ document.getElementById('spamForm').addEventListener('submit', function(event) {
         }
 
         startButton.disabled = false;
-        statusText.textContent = `Selesai! Gagal🥀: ${sentCount}, Berhasil🔥: ${failedCount}`;
+        statusText.textContent = `Selesai!
+        Gagal🥀: ${sentCount}, Berhasil🔥: ${failedCount}`;
         loaderBar.style.width = '100%';
     }
 
