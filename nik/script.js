@@ -1,4 +1,3 @@
-
 // Background loading
 const bgImage = document.getElementById('bgImage');
 const loadingOverlay = document.getElementById('loadingOverlay');
