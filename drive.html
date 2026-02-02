@@ -1,32 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload File</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #3e2723, #5d4037);
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  width: 320px;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+h2 {
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+input[type=file] {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #8d6e63;
+  color: #fff;
+  font-size: 14px;
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+.progress-box {
+  margin-top: 14px;
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: #d7ccc8;
+}
+
+.status {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: center;
+}
+</style>
+</head>
+
 <body>
-<input type="file" id="file">
-<button onclick="upload()">Upload</button>
+
+<div class="card">
+  <h2>Upload File</h2>
+  <input type="file" id="file">
+  <button onclick="upload()">Upload</button>
+
+  <div class="progress-box">
+    <div class="progress" id="progress"></div>
+  </div>
+  <div class="status" id="status">Menunggu file</div>
+</div>
 
 <script>
 function upload() {
-  var file = document.getElementById("file").files[0];
+  var fileInput = document.getElementById("file");
+  var progress = document.getElementById("progress");
+  var status = document.getElementById("status");
+
+  if (!fileInput.files.length) {
+    status.textContent = "Pilih file dulu";
+    return;
+  }
+
+  var file = fileInput.files[0];
   var reader = new FileReader();
+
+  status.textContent = "Membaca file";
 
   reader.onload = function() {
     var data = reader.result.split(",")[1];
+    var xhr = new XMLHttpRequest();
 
-    fetch("https://script.google.com/macros/s/AKfycbzNxr4NV04T0GpOWoRdx6ve470PqgCId_rAuAa7iLnU-M7mBTt5j_uFk6hob8VdGKvLLA/exec", {
-      method: "POST",
-      body: new URLSearchParams({
-        file: data,
-        name: file.name,
-        type: file.type
-      })
-    })
-    .then(r => r.text())
-    .then(alert);
+    xhr.open("POST", "https://script.google.com/macros/s/AKfycbzNxr4NV04T0GpOWoRdx6ve470PqgCId_rAuAa7iLnU-M7mBTt5j_uFk6hob8VdGKvLLA/exec");
+
+    xhr.upload.onprogress = function(e) {
+      if (e.lengthComputable) {
+        var percent = (e.loaded / e.total) * 100;
+        progress.style.width = percent + "%";
+        status.textContent = "Upload " + Math.floor(percent) + "%";
+      }
+    };
+
+    xhr.onload = function() {
+      progress.style.width = "100%";
+      status.textContent = "Upload berhasil";
+    };
+
+    xhr.onerror = function() {
+      status.textContent = "Upload gagal";
+    };
+
+    var body = new URLSearchParams();
+    body.append("file", data);
+    body.append("name", file.name);
+    body.append("type", file.type);
+
+    xhr.send(body);
   };
 
   reader.readAsDataURL(file);
 }
 </script>
+
 </body>
 </html>
-
