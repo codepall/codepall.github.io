@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<input type="file" id="file">
+<button onclick="upload()">Upload</button>
+
+<script>
+function upload() {
+  var file = document.getElementById("file").files[0];
+  var reader = new FileReader();
+
+  reader.onload = function() {
+    var data = reader.result.split(",")[1];
+
+    fetch("https://script.google.com/macros/s/AKfycbzNxr4NV04T0GpOWoRdx6ve470PqgCId_rAuAa7iLnU-M7mBTt5j_uFk6hob8VdGKvLLA/exec", {
+      method: "POST",
+      body: new URLSearchParams({
+        file: data,
+        name: file.name,
+        type: file.type
+      })
+    })
+    .then(r => r.text())
+    .then(alert);
+  };
+
+  reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
+
