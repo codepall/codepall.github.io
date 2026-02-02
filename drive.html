@@ -12,62 +12,66 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #3e2723, #5d4037);
+  background: linear-gradient(135deg, #0d47a1, #1976d2);
   font-family: Arial, sans-serif;
 }
 
 .card {
-  width: 320px;
-  padding: 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  width: 360px;
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   color: #fff;
+  text-align: center;
 }
 
 h2 {
   margin: 0 0 16px;
-  text-align: center;
+}
+
+.drop-area {
+  padding: 28px 16px;
+  border: 2px dashed rgba(255,255,255,0.6);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.drop-area.drag {
+  background: rgba(255,255,255,0.15);
 }
 
 input[type=file] {
-  width: 100%;
-  margin-bottom: 12px;
+  display: none;
 }
 
-button {
-  width: 100%;
+.button {
+  margin-top: 14px;
   padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #8d6e63;
-  color: #fff;
+  border-radius: 12px;
+  background: #64b5f6;
+  color: #0d47a1;
   font-size: 14px;
 }
 
-button:active {
-  opacity: 0.8;
-}
-
 .progress-box {
-  margin-top: 14px;
+  margin-top: 16px;
   height: 10px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .progress {
   height: 100%;
   width: 0%;
-  background: #d7ccc8;
+  background: #bbdefb;
 }
 
 .status {
   margin-top: 8px;
   font-size: 12px;
-  text-align: center;
 }
 </style>
 </head>
@@ -76,60 +80,90 @@ button:active {
 
 <div class="card">
   <h2>Upload File</h2>
+
+  <div class="drop-area" id="drop">
+    Drag dan drop file  
+    <br>atau klik untuk memilih
+  </div>
+
   <input type="file" id="file">
-  <button onclick="upload()">Upload</button>
+
+  <div class="button" onclick="upload()">Upload</div>
 
   <div class="progress-box">
     <div class="progress" id="progress"></div>
   </div>
+
   <div class="status" id="status">Menunggu file</div>
 </div>
 
 <script>
-function upload() {
-  var fileInput = document.getElementById("file");
-  var progress = document.getElementById("progress");
-  var status = document.getElementById("status");
+const fileInput = document.getElementById("file");
+const dropArea = document.getElementById("drop");
+const progress = document.getElementById("progress");
+const statusText = document.getElementById("status");
 
+dropArea.onclick = () => fileInput.click();
+
+dropArea.ondragover = e => {
+  e.preventDefault();
+  dropArea.classList.add("drag");
+};
+
+dropArea.ondragleave = () => {
+  dropArea.classList.remove("drag");
+};
+
+dropArea.ondrop = e => {
+  e.preventDefault();
+  dropArea.classList.remove("drag");
+  fileInput.files = e.dataTransfer.files;
+  statusText.textContent = fileInput.files[0].name;
+};
+
+fileInput.onchange = () => {
+  statusText.textContent = fileInput.files[0].name;
+};
+
+function upload() {
   if (!fileInput.files.length) {
-    status.textContent = "Pilih file dulu";
+    statusText.textContent = "Pilih file dulu";
     return;
   }
 
-  var file = fileInput.files[0];
-  var reader = new FileReader();
+  const file = fileInput.files[0];
+  const reader = new FileReader();
 
-  status.textContent = "Membaca file";
+  reader.onprogress = e => {
+    if (e.lengthComputable) {
+      const percent = (e.loaded / e.total) * 100;
+      progress.style.width = percent + "%";
+      statusText.textContent = "Membaca file " + Math.floor(percent) + "%";
+    }
+  };
 
-  reader.onload = function() {
-    var data = reader.result.split(",")[1];
-    var xhr = new XMLHttpRequest();
+  reader.onload = () => {
+    progress.style.width = "90%";
+    statusText.textContent = "Mengirim ke server";
 
-    xhr.open("POST", "https://script.google.com/macros/s/AKfycbzNxr4NV04T0GpOWoRdx6ve470PqgCId_rAuAa7iLnU-M7mBTt5j_uFk6hob8VdGKvLLA/exec");
+    const data = reader.result.split(",")[1];
 
-    xhr.upload.onprogress = function(e) {
-      if (e.lengthComputable) {
-        var percent = (e.loaded / e.total) * 100;
-        progress.style.width = percent + "%";
-        status.textContent = "Upload " + Math.floor(percent) + "%";
-      }
-    };
-
-    xhr.onload = function() {
+    fetch("URL_WEB_APP_KAMU", {
+      method: "POST",
+      body: new URLSearchParams({
+        file: data,
+        name: file.name,
+        type: file.type
+      })
+    })
+    .then(r => r.text())
+    .then(() => {
       progress.style.width = "100%";
-      status.textContent = "Upload berhasil";
-    };
-
-    xhr.onerror = function() {
-      status.textContent = "Upload gagal";
-    };
-
-    var body = new URLSearchParams();
-    body.append("file", data);
-    body.append("name", file.name);
-    body.append("type", file.type);
-
-    xhr.send(body);
+      statusText.textContent = "Upload selesai";
+    })
+    .catch(() => {
+      statusText.textContent = "Upload gagal";
+    });
   };
 
   reader.readAsDataURL(file);
