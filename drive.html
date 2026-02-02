@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codepall | Blog Pribadi</title>
+<title>Codepall | Files Upload</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -146,12 +146,7 @@ input[type=file] {
 
 <header>
   <h1>Codepall</h1>
-  <p>Student | Beginner</p>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#upload">Upload</a>
-  </nav>
+  <p>Upload your files!</p>
 </header>
 
 <div class="container">
@@ -210,7 +205,7 @@ function uploadFile(file) {
   const reader = new FileReader();
 
   reader.onload = () => {
-    fetch("URL_WEB_APP_KAMU", {
+    fetch("https://script.google.com/macros/s/AKfycbzxrj9SihiEGSnAzMyPOzrBlW79IB_J3K5Xh4MM11x_GfEo-x7cR26EIHT5wA-oUHXDpA/exec", {
       method: "POST",
       body: new URLSearchParams({
         file: reader.result.split(",")[1],
