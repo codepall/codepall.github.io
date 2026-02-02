@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Upload File</title>
+<title>Upload</title>
 
 <style>
 body {
@@ -12,66 +12,69 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #0d47a1, #1976d2);
-  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1f1147, #3b1d6b, #5e2b97);
+  font-family: system-ui, -apple-system, Arial;
 }
 
 .card {
-  width: 360px;
-  padding: 22px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  width: 380px;
+  padding: 26px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
   color: #fff;
   text-align: center;
 }
 
 h2 {
-  margin: 0 0 16px;
+  margin: 0 0 18px;
+  font-weight: 600;
 }
 
-.drop-area {
-  padding: 28px 16px;
-  border: 2px dashed rgba(255,255,255,0.6);
-  border-radius: 14px;
+.drop {
+  padding: 36px 16px;
+  border-radius: 18px;
+  border: 2px dashed rgba(255,255,255,0.5);
   cursor: pointer;
 }
 
-.drop-area.drag {
+.drop.drag {
   background: rgba(255,255,255,0.15);
 }
 
-input[type=file] {
+input {
   display: none;
 }
 
-.button {
-  margin-top: 14px;
-  padding: 10px;
-  border-radius: 12px;
-  background: #64b5f6;
-  color: #0d47a1;
-  font-size: 14px;
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #b388ff, #7c4dff);
+  color: #1f1147;
+  font-size: 15px;
 }
 
 .progress-box {
-  margin-top: 16px;
+  margin-top: 18px;
   height: 10px;
-  background: rgba(255,255,255,0.25);
   border-radius: 10px;
+  background: rgba(255,255,255,0.25);
   overflow: hidden;
 }
 
 .progress {
   height: 100%;
   width: 0%;
-  background: #bbdefb;
+  background: linear-gradient(90deg, #d1c4ff, #b388ff);
 }
 
 .status {
-  margin-top: 8px;
-  font-size: 12px;
+  margin-top: 10px;
+  font-size: 13px;
 }
 </style>
 </head>
@@ -81,14 +84,14 @@ input[type=file] {
 <div class="card">
   <h2>Upload File</h2>
 
-  <div class="drop-area" id="drop">
-    Drag dan drop file  
-    <br>atau klik untuk memilih
+  <div class="drop" id="drop">
+    Drag file ke sini  
+    <br>atau tap untuk pilih
   </div>
 
   <input type="file" id="file">
 
-  <div class="button" onclick="upload()">Upload</div>
+  <button onclick="upload()">Upload</button>
 
   <div class="progress-box">
     <div class="progress" id="progress"></div>
@@ -98,68 +101,67 @@ input[type=file] {
 </div>
 
 <script>
-const fileInput = document.getElementById("file");
-const dropArea = document.getElementById("drop");
+const input = document.getElementById("file");
+const drop = document.getElementById("drop");
 const progress = document.getElementById("progress");
 const statusText = document.getElementById("status");
 
-dropArea.onclick = () => fileInput.click();
+drop.onclick = () => input.click();
 
-dropArea.ondragover = e => {
+drop.ondragover = e => {
   e.preventDefault();
-  dropArea.classList.add("drag");
+  drop.classList.add("drag");
 };
 
-dropArea.ondragleave = () => {
-  dropArea.classList.remove("drag");
-};
+drop.ondragleave = () => drop.classList.remove("drag");
 
-dropArea.ondrop = e => {
+drop.ondrop = e => {
   e.preventDefault();
-  dropArea.classList.remove("drag");
-  fileInput.files = e.dataTransfer.files;
-  statusText.textContent = fileInput.files[0].name;
+  drop.classList.remove("drag");
+  input.files = e.dataTransfer.files;
+  statusText.textContent = input.files[0].name;
 };
 
-fileInput.onchange = () => {
-  statusText.textContent = fileInput.files[0].name;
+input.onchange = () => {
+  statusText.textContent = input.files[0].name;
 };
 
 function upload() {
-  if (!fileInput.files.length) {
+  if (!input.files.length) {
     statusText.textContent = "Pilih file dulu";
     return;
   }
 
-  const file = fileInput.files[0];
+  const file = input.files[0];
   const reader = new FileReader();
 
   reader.onprogress = e => {
     if (e.lengthComputable) {
-      const percent = (e.loaded / e.total) * 100;
-      progress.style.width = percent + "%";
-      statusText.textContent = "Membaca file " + Math.floor(percent) + "%";
+      progress.style.width = (e.loaded / e.total * 70) + "%";
+      statusText.textContent = "Membaca file";
     }
   };
 
   reader.onload = () => {
-    progress.style.width = "90%";
-    statusText.textContent = "Mengirim ke server";
+    progress.style.width = "80%";
+    statusText.textContent = "Mengirim file";
 
-    const data = reader.result.split(",")[1];
-
-    fetch("URL_WEB_APP_KAMU", {
+    fetch("https://script.google.com/macros/s/AKfycbzxrj9SihiEGSnAzMyPOzrBlW79IB_J3K5Xh4MM11x_GfEo-x7cR26EIHT5wA-oUHXDpA/exec", {
       method: "POST",
       body: new URLSearchParams({
-        file: data,
+        file: reader.result.split(",")[1],
         name: file.name,
         type: file.type
       })
     })
     .then(r => r.text())
-    .then(() => {
-      progress.style.width = "100%";
-      statusText.textContent = "Upload selesai";
+    .then(res => {
+      if (res.startsWith("OK")) {
+        progress.style.width = "100%";
+        statusText.textContent = "Upload berhasil";
+      } else {
+        statusText.textContent = res;
+      }
     })
     .catch(() => {
       statusText.textContent = "Upload gagal";
