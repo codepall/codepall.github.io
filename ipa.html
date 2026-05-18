@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Studygram & Visual Notes - IPA Kelas VIII</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Aesthetic Looks -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas to Export Notes as Real Images -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        handwritten: ['"Caveat"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f7f5f0;
+            background-image: radial-gradient(#e5e0d8 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        /* Cute notebook ring effect */
+        .notebook-ring {
+            background: linear-gradient(to right, #d1d5db, #f3f4f6, #9ca3af);
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), 1px 2px 4px rgba(0,0,0,0.15);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header & Navigation -->
+    <header class="w-full max-w-6xl mx-auto px-4 pt-6 pb-2">
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-orange-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <span class="font-handwritten text-3xl text-amber-600 block mb-1">Study Journal IPA Kelas 8</span>
+                <h1 class="font-serif text-3xl md:text-4xl text-slate-900">Catatan Cantik Sumatif Akhir Genap 🌸</h1>
+                <p class="text-sm text-slate-500 mt-1">Dirancang khusus berdasarkan kisi-kisi resmi. Interaktif & bisa diunduh sebagai gambar!</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="exportActiveNote()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-5 py-3 rounded-2xl shadow-md shadow-orange-100 transition duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Ekspor Catatan ke Gambar (.PNG)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap gap-2 mt-6 justify-center md:justify-start">
+            <button onclick="switchTab('tab-getaran')" id="btn-tab-getaran" class="tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-purple-100 text-purple-800 border-2 border-purple-200">
+                <span class="text-lg">🌊</span> Getaran & Gelombang
+            </button>
+            <button onclick="switchTab('tab-cahaya')" id="btn-tab-cahaya" class="tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-white text-slate-600 hover:bg-orange-50 hover:text-orange-600">
+                <span class="text-lg">👁️</span> Cahaya & Optik
+            </button>
+            <button onclick="switchTab('tab-unsur')" id="btn-tab-unsur" class="tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-600">
+                <span class="text-lg">🧪</span> Unsur & Campuran
+            </button>
+            <button onclick="switchTab('tab-bumi')" id="btn-tab-bumi" class="tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-white text-slate-600 hover:bg-amber-50 hover:text-amber-600">
+                <span class="text-lg">🌍</span> Struktur Bumi
+            </button>
+            <button onclick="switchTab('tab-quiz')" id="btn-tab-quiz" class="tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-white text-slate-600 hover:bg-pink-50 hover:text-pink-600">
+                <span class="text-lg">🧠</span> Flashcards Quiz
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content Area representing a beautiful notebook binder -->
+    <main class="flex-grow w-full max-w-6xl mx-auto px-4 py-4">
+        
+        <!-- Tab 1: Getaran & Gelombang -->
+        <div id="tab-getaran" class="tab-content block">
+            <div id="capture-getaran" class="bg-white rounded-3xl shadow-xl border border-purple-100 p-6 md:p-10 relative overflow-hidden">
+                <!-- Decorative Washi Tape -->
+                <div class="absolute -top-3 left-12 w-32 h-10 bg-purple-200/50 backdrop-blur-sm -rotate-3 border-y border-dashed border-purple-300 shadow-sm z-10 flex items-center justify-center font-handwritten text-purple-800 text-lg">CHAPTER 1</div>
+                
+                <!-- Title Block -->
+                <div class="text-center border-b-2 border-dashed border-purple-100 pb-8 mt-4">
+                    <h2 class="font-serif text-4xl text-purple-900 italic">Getaran, Gelombang, & Bunyi</h2>
+                    <p class="font-handwritten text-2xl text-purple-600 mt-1">"Segala sesuatu di alam semesta ini bergetar!"</p>
+                </div>
+
+                <!-- Notebook Grid Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    
+                    <!-- Getaran & Bandul Section -->
+                    <div class="bg-purple-50/50 rounded-2xl p-6 border border-purple-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-purple-400">Kisi-Kisi 3, 4, 5, 8</span>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="p-2 bg-purple-200 text-purple-800 rounded-xl text-lg font-bold">1</span>
+                            <h3 class="font-serif text-2xl text-purple-900">Getaran & Ayunan Bandul</h3>
+                        </div>
+                        
+                        <!-- Mini Simulation Area -->
+                        <div class="bg-white rounded-xl p-4 shadow-inner border border-purple-100/60 mb-4 flex flex-col items-center">
+                            <span class="text-xs text-slate-400 mb-2">Simulasi Ayunan Bandul</span>
+                            <svg class="w-40 h-36" viewBox="0 0 200 180">
+                                <!-- Ceiling -->
+                                <line x1="20" y1="10" x2="180" y2="10" stroke="#9333ea" stroke-width="4" stroke-linecap="round"/>
+                                <!-- Path line -->
+                                <path d="M 50 120 A 100 100 0 0 0 150 120" fill="none" stroke="#e9d5ff" stroke-dasharray="4" stroke-width="2"/>
+                                <!-- Pivot Point -->
+                                <circle cx="100" cy="10" r="5" fill="#4a044e"/>
+                                <!-- Pendulum Line -->
+                                <line id="pendulum-string" x1="100" y1="10" x2="100" y2="120" stroke="#6b21a8" stroke-width="2"/>
+                                <!-- Ball -->
+                                <circle id="pendulum-ball" cx="100" cy="120" r="14" fill="url(#purpleGrad)"/>
+                                <!-- Text labels -->
+                                <text x="45" y="145" class="text-xs font-bold fill-purple-600">A</text>
+                                <text x="96" y="152" class="text-xs font-bold fill-purple-900">B (Setimbang)</text>
+                                <text x="145" y="145" class="text-xs font-bold fill-purple-600">C</text>
+                                <defs>
+                                    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#c084fc" />
+                                        <stop offset="100%" stop-color="#7e22ce" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="flex gap-2 mt-2">
+                                <button onclick="swingBandul('full')" class="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">A → B → C → B → A (1 Getaran)</button>
+                                <button onclick="swingBandul('half')" class="bg-purple-200 hover:bg-purple-300 text-purple-800 text-xs font-bold px-3 py-1.5 rounded-lg transition">A → B → C (0.5 Getaran)</button>
+                            </div>
+                        </div>
+
+                        <!-- Notes list -->
+                        <ul class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                            <li>✨ <strong class="text-purple-900">Satu Getaran Penuh:</strong> Gerakan bolak-balik sepenuhnya dari titik asal dan kembali lagi (A → B → C → B → A).</li>
+                            <li>✨ <strong class="text-purple-900">Amplitudo (A):</strong> Simpangan terjauh dari titik setimbang (B → A atau B → C).</li>
+                            <li>✨ <strong class="text-purple-900">Frekuensi (f = n / t):</strong> Banyaknya getaran tiap satu detik (Satuan: Hertz / Hz).</li>
+                            <li>✨ <strong class="text-purple-900">Periode (T = t / n):</strong> Waktu yang diperlukan untuk membuat satu getaran penuh (Satuan: Sekon).</li>
+                            <li>💡 <strong class="text-purple-900">Hukum Panjang Tali:</strong> Semakin panjang tali, periode (T) semakin <span class="text-amber-600 font-semibold">Besar</span> (ayunan lambat), tetapi frekuensi (f) semakin <span class="text-red-600 font-semibold">Kecil</span>!</li>
+                        </ul>
+                    </div>
+
+                    <!-- Gelombang Transversal Section -->
+                    <div class="bg-purple-50/50 rounded-2xl p-6 border border-purple-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-purple-400">Kisi-Kisi 1, 2, 9</span>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="p-2 bg-purple-200 text-purple-800 rounded-xl text-lg font-bold">2</span>
+                            <h3 class="font-serif text-2xl text-purple-900">Gelombang Transversal</h3>
+                        </div>
+
+                        <!-- Interactive Wave Generator -->
+                        <div class="bg-white rounded-xl p-4 shadow-inner border border-purple-100/60 mb-4">
+                            <span class="text-xs text-slate-400 block mb-2 text-center">Simulator Gelombang Transversal Aktif</span>
+                            <canvas id="waveCanvas" class="w-full h-24 bg-purple-950 rounded-lg"></canvas>
+                            <div class="grid grid-cols-2 gap-4 mt-3">
+                                <div>
+                                    <label class="text-[10px] text-slate-500 font-bold uppercase">Frekuensi (f)</label>
+                                    <input type="range" id="waveFreq" min="1" max="5" step="0.5" value="2" class="w-full accent-purple-600" oninput="updateWaveParams()">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 font-bold uppercase">Panjang Gelombang (λ)</label>
+                                    <input type="range" id="waveLambda" min="40" max="150" step="10" value="100" class="w-full accent-purple-600" oninput="updateWaveParams()">
+                                </div>
+                            </div>
+                            <div class="bg-purple-50 p-2 rounded-lg mt-2 text-center">
+                                <span class="text-xs font-semibold text-purple-900" id="waveResult">Rumus: v = f × λ = 2Hz × 100m = 200 m/s</span>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                            <li>✨ <strong class="text-purple-900">Gelombang Transversal:</strong> Gelombang yang arah getarnya tegak lurus arah rambatannya (misal: gelombang tali, air, cahaya).</li>
+                            <li>✨ <strong class="text-purple-900">Anatomi Gelombang:</strong> Satu gelombang penuh terdiri atas <span class="underline decoration-purple-400 decoration-2">1 Bukit & 1 Lembah</span>.</li>
+                            <li>✨ <strong class="text-purple-900">Cepat Rambat (v):</strong> Kecepatan merambatnya gelombang.
+                                <div class="bg-purple-100 text-purple-950 font-mono text-center py-2 px-3 rounded-xl my-2 text-sm border border-purple-200">
+                                    v = f × λ &nbsp;&nbsp;atau&nbsp;&nbsp; v = λ / T
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bunyi & Pendengaran Bottom Banner -->
+                <div class="bg-amber-50 rounded-2xl p-6 border border-amber-100 mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                    <span class="absolute top-2 right-4 text-xs font-mono text-amber-500">Kisi-Kisi 6, 7, 10, 11</span>
+                    
+                    <div class="md:col-span-2">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="p-1.5 bg-amber-200 text-amber-900 rounded-lg text-sm font-bold">3</span>
+                            <h3 class="font-serif text-xl text-amber-900">Bunyi, Pendengaran & Sistem Sonar</h3>
+                        </div>
+                        <p class="text-sm text-slate-700 leading-relaxed mb-3">
+                            Gelombang bunyi merambat melalui medium (zat padat, cair, gas). Manusia hanya bisa mendengar bunyi berfrekuensi <strong class="text-amber-800">Audiosonik (20 Hz - 20.000 Hz)</strong>.
+                        </p>
+                        <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+                            <div class="bg-white p-2 rounded-xl border border-amber-200">
+                                <p class="font-bold text-slate-500">Infrasonik</p>
+                                <p class="text-amber-700 font-semibold">&lt; 20 Hz</p>
+                                <p class="text-slate-400">Anjing, Jangkrik</p>
+                            </div>
+                            <div class="bg-amber-100 p-2 rounded-xl border border-amber-300 font-bold shadow-sm">
+                                <p class="text-slate-700">Audiosonik</p>
+                                <p class="text-amber-900">20 - 20.000 Hz</p>
+                                <p class="text-amber-700">Manusia 👩‍🦰</p>
+                            </div>
+                            <div class="bg-white p-2 rounded-xl border border-amber-200">
+                                <p class="font-bold text-slate-500">Ultrasonik</p>
+                                <p class="text-amber-700 font-semibold">&gt; 20.000 Hz</p>
+                                <p class="text-slate-400">Kelelawar, Lumba²</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl border border-amber-100 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-amber-600 block mb-1">Aplikasi: Mengukur Kedalaman Laut</span>
+                            <p class="text-[12px] text-slate-600 leading-snug">Mengirim bunyi ultrasonik ke dasar laut, lalu mendeteksi pantulannya.</p>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-lg text-center mt-2 border border-amber-200">
+                            <span class="text-xs font-bold text-slate-500 block">Rumus Pantulan:</span>
+                            <span class="font-mono font-bold text-amber-900 text-sm">d = (v × t) / 2</span>
+                            <span class="text-[9px] text-slate-400 block mt-1">(Dividagi 2 karena perjalanan bolak-balik)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anatomy of Ear Note -->
+                <div class="mt-6 bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col md:flex-row gap-4 items-center">
+                    <div class="p-3 bg-purple-100 rounded-2xl text-purple-700">
+                        <i class="fa-solid fa-ear-listen text-3xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-900">Anatomi Telinga (Kisi-Kisi 6, 7)</h4>
+                        <p class="text-xs text-slate-600 mt-1">
+                            • <strong>Telinga Luar:</strong> Daun telinga (menangkap suara), Saluran telinga. <br>
+                            • <strong>Telinga Tengah:</strong> Gendang telinga (membran timpani - bergetar akibat suara), 3 Tulang Pendengaran (Martil, Landasan, Sanggurdi - memperkuat getaran). <br>
+                            • <strong>Telinga Dalam:</strong> Koklea (Rumah Siput - mengubah getaran jadi impuls saraf), Saluran Setengah Lingkaran (menjaga keseimbangan tubuh).
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tab 2: Cahaya & Optik -->
+        <div id="tab-cahaya" class="tab-content hidden">
+            <div id="capture-cahaya" class="bg-white rounded-3xl shadow-xl border border-orange-100 p-6 md:p-10 relative overflow-hidden">
+                <div class="absolute -top-3 left-12 w-32 h-10 bg-orange-200/50 backdrop-blur-sm -rotate-3 border-y border-dashed border-orange-300 shadow-sm z-10 flex items-center justify-center font-handwritten text-orange-800 text-lg">CHAPTER 2</div>
+
+                <div class="text-center border-b-2 border-dashed border-orange-100 pb-8 mt-4">
+                    <h2 class="font-serif text-4xl text-orange-900 italic">Cahaya & Alat Optik</h2>
+                    <p class="font-handwritten text-2xl text-orange-600 mt-1">"Melihat keindahan dunia melalui pembiasan cahaya"</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    <!-- Sifat Cahaya & Cermin Datar -->
+                    <div class="bg-orange-50/50 rounded-2xl p-6 border border-orange-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-orange-500">Kisi-Kisi 13, 15, 16, 17</span>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="p-2 bg-orange-200 text-orange-800 rounded-xl text-lg font-bold">1</span>
+                            <h3 class="font-serif text-2xl text-orange-900">Sifat Cahaya & Cermin</h3>
+                        </div>
+
+                        <!-- Clock Mirror Image Demonstration -->
+                        <div class="bg-white rounded-xl p-4 shadow-inner border border-orange-100/60 mb-4 flex flex-col items-center">
+                            <span class="text-xs text-slate-400 mb-2">Simulasi Bayangan Jam di Cermin Datar (Kisi-Kisi 15)</span>
+                            <div class="flex gap-8 items-center justify-center">
+                                <div class="text-center">
+                                    <span class="text-[10px] text-slate-500 font-bold block mb-1">JAM ASLI</span>
+                                    <div class="w-16 h-16 rounded-full border-2 border-slate-400 flex items-center justify-center relative bg-slate-50">
+                                        <!-- Hour hands for 03.15 -->
+                                        <div class="absolute top-1/2 left-1/2 w-4 h-[2px] bg-slate-800 origin-left rotate-0"></div> <!-- minute hand -->
+                                        <div class="absolute top-1/2 left-1/2 w-5 h-[3px] bg-amber-600 origin-left rotate-[90deg]"></div> <!-- hour hand -->
+                                        <circle cx="32" cy="32" r="2" fill="black"/>
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-700 mt-1 block">06.15</span>
+                                </div>
+                                <div class="text-slate-300 text-xl font-bold">⇌</div>
+                                <div class="text-center">
+                                    <span class="text-[10px] text-orange-600 font-bold block mb-1">BAYANGAN CERMIN</span>
+                                    <div class="w-16 h-16 rounded-full border-2 border-orange-400 flex items-center justify-center relative bg-orange-50">
+                                        <!-- Reflected hands -->
+                                        <div class="absolute top-1/2 left-1/2 w-4 h-[2px] bg-slate-800 origin-left rotate-[180deg]"></div> <!-- minute hand -->
+                                        <div class="absolute top-1/2 left-1/2 w-5 h-[3px] bg-amber-600 origin-left rotate-[90deg]"></div> <!-- hour hand -->
+                                        <circle cx="32" cy="32" r="2" fill="black"/>
+                                    </div>
+                                    <span class="text-xs font-semibold text-orange-700 mt-1 block">05.45</span>
+                                </div>
+                            </div>
+                            <span class="text-[11px] text-slate-500 mt-3 text-center bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                                💡 <strong>Trik Cepat:</strong> Bayangan cermin datar selalu simetris (terbalik secara lateral). Jam Asli + Bayangan = Selalu Jam 11.60 (12.00)!
+                            </span>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                            <li>✨ <strong class="text-orange-900">Sifat-Sifat Cahaya:</strong> Merambat lurus, menembus benda bening, dapat dipantulkan (refleksi), dapat dibiaskan (refraksi), dapat diuraikan (dispersi).</li>
+                            <li>✨ <strong class="text-orange-900">Sifat Bayangan Cermin Datar:</strong> Maya (di belakang cermin), tegak, sama besar, jarak benda = jarak bayangan (s = s'), serta posisi kiri-kanan tertukar.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Kelainan Mata & Alat Optik -->
+                    <div class="bg-orange-50/50 rounded-2xl p-6 border border-orange-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-orange-500">Kisi-Kisi 12, 14</span>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="p-2 bg-orange-200 text-orange-800 rounded-xl text-lg font-bold">2</span>
+                            <h3 class="font-serif text-2xl text-orange-900">Kelainan Mata & Alat Optik</h3>
+                        </div>
+
+                        <!-- Interactive Eye Vision Corrector Simulator -->
+                        <div class="bg-white rounded-xl p-4 shadow-inner border border-orange-100/60 mb-4">
+                            <span class="text-xs text-slate-400 block mb-2 text-center">Simulasi Kelainan & Koreksi Lensa Mata (Kisi-Kisi 12)</span>
+                            
+                            <!-- SVG Showing focusing of light inside eye -->
+                            <div class="flex justify-center bg-slate-900 p-2 rounded-lg">
+                                <svg class="w-full h-32" viewBox="0 0 280 120">
+                                    <!-- Eye Contour -->
+                                    <path d="M 120 10 A 50 50 0 0 1 220 60 A 50 50 0 0 1 120 110 L 80 110 A 60 40 0 0 1 80 10 Z" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                                    <!-- Lens -->
+                                    <ellipse cx="90" cy="60" rx="10" ry="25" fill="#38bdf8" opacity="0.8"/>
+                                    <!-- Retina Wall (Destination) -->
+                                    <path d="M 215 25 A 40 40 0 0 1 215 95" fill="none" stroke="#f43f5e" stroke-width="3" stroke-linecap="round"/>
+                                    <text x="225" y="64" class="text-[9px] fill-rose-400 font-bold">Retina</text>
+
+                                    <!-- Corrective Lens (Hidden or Shown) -->
+                                    <path id="glassLens" d="M 40 40 Q 45 60 40 80 Q 35 60 40 80" fill="none" stroke="#06b6d4" stroke-width="5" opacity="0"/>
+                                    <text id="glassLabel" x="32" y="32" class="text-[9px] fill-cyan-400 font-bold" style="opacity:0;">Lensa Cekung</text>
+
+                                    <!-- Light Rays -->
+                                    <path id="lightRay1" d="M 10 30 L 90 30 L 170 60" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+                                    <path id="lightRay2" d="M 10 90 L 90 90 L 170 60" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+                                    <!-- Convergence Point Indicator -->
+                                    <circle id="focusPoint" cx="170" cy="60" r="4" fill="#fb7185"/>
+                                </svg>
+                            </div>
+
+                            <div class="mt-3 flex flex-col gap-2">
+                                <div class="flex justify-between items-center text-xs">
+                                    <span class="font-bold text-slate-600">Pilih Kondisi Mata:</span>
+                                    <select id="eyeConditionSelect" onchange="updateEyeSimulation()" class="bg-slate-50 border border-slate-200 rounded-md p-1 font-semibold text-slate-700">
+                                        <option value="miopi">Miopi (Rabun Jauh)</option>
+                                        <option value="hipermetropi">Hipermetropi (Rabun Dekat)</option>
+                                        <option value="normal">Mata Normal</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center justify-between text-xs mt-1">
+                                    <span class="font-bold text-slate-600">Gunakan Kacamata Koreksi:</span>
+                                    <input type="checkbox" id="useGlasses" onchange="updateEyeSimulation()" class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-2.5 text-sm text-slate-700 leading-relaxed">
+                            <li>👓 <strong class="text-orange-900">Miopi (Rabun Jauh):</strong> Tidak bisa melihat benda jauh secara jelas karena bayangan jatuh <span class="bg-rose-100 text-rose-800 px-1 py-0.5 rounded font-bold">di depan retina</span>. Ditangani dengan kacamata <strong class="text-cyan-700">Lensa Cekung (Negatif)</strong>.</li>
+                            <li>👓 <strong class="text-orange-900">Hipermetropi (Rabun Dekat):</strong> Tidak bisa melihat benda dekat secara jelas karena bayangan jatuh <span class="bg-amber-100 text-amber-800 px-1 py-0.5 rounded font-bold">di belakang retina</span>. Ditangani dengan kacamata <strong class="text-amber-700">Lensa Cembung (Positif)</strong>.</li>
+                            <li>🔍 <strong class="text-orange-900">Fungsi Alat Optik:</strong> Lup (kaca pembesar untuk melihat benda kecil), Mikroskop (melihat sel/mikroorganisme), Teleskop/Teropong (melihat benda langit/sangat jauh).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Unsur, Senyawa & Campuran -->
+        <div id="tab-unsur" class="tab-content hidden">
+            <div id="capture-unsur" class="bg-white rounded-3xl shadow-xl border border-emerald-100 p-6 md:p-10 relative overflow-hidden">
+                <div class="absolute -top-3 left-12 w-32 h-10 bg-emerald-200/50 backdrop-blur-sm -rotate-3 border-y border-dashed border-emerald-300 shadow-sm z-10 flex items-center justify-center font-handwritten text-emerald-800 text-lg">CHAPTER 3</div>
+
+                <div class="text-center border-b-2 border-dashed border-emerald-100 pb-8 mt-4">
+                    <h2 class="font-serif text-4xl text-emerald-900 italic">Unsur, Senyawa, & Campuran</h2>
+                    <p class="font-handwritten text-2xl text-emerald-600 mt-1">"Memahami susunan terkecil dari materi di sekitar kita"</p>
+                </div>
+
+                <!-- Three Columns: Atom, Molekul, Metode Pemisahan -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+                    
+                    <!-- Atom Section -->
+                    <div class="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-emerald-500">Kisi-Kisi 18, 20, 25</span>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="p-1.5 bg-emerald-200 text-emerald-800 rounded-lg text-sm font-bold">1</span>
+                            <h4 class="font-serif text-xl text-emerald-900">Struktur Atom & IUPAC</h4>
+                        </div>
+                        
+                        <!-- Interactive Atom Drawer -->
+                        <div class="bg-white p-3 rounded-xl border border-emerald-100 mb-4 flex flex-col items-center">
+                            <span class="text-[10px] text-slate-400 mb-1">Model Atom Karbon (C)</span>
+                            <svg class="w-32 h-32" viewBox="0 0 120 120">
+                                <!-- Shell paths -->
+                                <circle cx="60" cy="60" r="45" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3"/>
+                                <circle cx="60" cy="60" r="25" fill="none" stroke="#cbd5e1" stroke-width="1"/>
+                                <!-- Nucleus (Center Cluster) -->
+                                <circle cx="60" cy="60" r="10" fill="#a7f3d0" stroke="#047857" stroke-width="1"/>
+                                <circle cx="58" cy="58" r="4" fill="#ef4444"/> <!-- Proton -->
+                                <circle cx="62" cy="62" r="4" fill="#3b82f6"/> <!-- Neutron -->
+                                <circle cx="62" cy="57" r="4" fill="#ef4444"/>
+                                <circle cx="57" cy="63" r="4" fill="#3b82f6"/>
+                                <!-- Electrons on shell -->
+                                <circle cx="60" cy="15" r="3.5" fill="#f59e0b"/> <!-- Electron 1 -->
+                                <circle cx="60" cy="105" r="3.5" fill="#f59e0b"/> <!-- Electron 2 -->
+                                <circle cx="35" cy="60" r="3" fill="#f59e0b"/> <!-- Inner Shell e -->
+                                <circle cx="85" cy="60" r="3" fill="#f59e0b"/>
+                            </svg>
+                            <div class="flex gap-3 text-[9px] mt-1 font-semibold text-slate-600">
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Proton (+)</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Neutron (0)</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Elektron (-)</span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            • <strong>Inti Atom:</strong> Berisi Proton (+) dan Neutron (netral). <br>
+                            • <strong>Elektron (-):</strong> Mengorbit inti atom dengan kecepatan sangat tinggi. <br>
+                            • <strong>Sifat Fisika Unsur:</strong> Sifat yang diamati tanpa reaksi kimia (titik didih, massa jenis, kelarutan, wujud). <br>
+                            • <strong>IUPAC:</strong> Organisasi kimia dunia yang menstandardisasi tata nama ilmiah unsur & senyawa kimia secara global.
+                        </p>
+                    </div>
+
+                    <!-- Molekul & Senyawa Section -->
+                    <div class="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-emerald-500">Kisi-Kisi 19, 21, 22, 23, 24</span>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="p-1.5 bg-emerald-200 text-emerald-800 rounded-lg text-sm font-bold">2</span>
+                            <h4 class="font-serif text-xl text-emerald-900">Molekul & Senyawa</h4>
+                        </div>
+
+                        <!-- Molekul Visual Selector -->
+                        <div class="bg-white p-3 rounded-xl border border-emerald-100 mb-4 flex flex-col items-center">
+                            <div class="flex gap-2 mb-2 w-full">
+                                <button onclick="selectMolecule('unsur')" class="flex-1 bg-emerald-600 text-white text-[10px] font-bold py-1 rounded transition" id="molUnsurBtn">Molekul Unsur</button>
+                                <button onclick="selectMolecule('senyawa')" class="flex-1 bg-slate-100 text-slate-600 text-[10px] font-bold py-1 rounded transition" id="molSenyawaBtn">Molekul Senyawa</button>
+                            </div>
+                            <!-- Molecule Viewer area -->
+                            <div class="h-20 flex items-center justify-center w-full" id="moleculeViewer">
+                                <!-- Default Molekul Unsur O2 -->
+                                <div class="flex items-center gap-1">
+                                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-xs shadow-md border-2 border-red-600">O</div>
+                                    <div class="w-6 h-1 bg-slate-400"></div>
+                                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-xs shadow-md border-2 border-red-600">O</div>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-slate-500 font-semibold mt-1" id="moleculeDesc">Contoh: Oksigen (O₂) - Terdiri atas atom sejenis.</span>
+                        </div>
+
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            • <strong>Molekul Unsur:</strong> Penggabungan atom-atom sejenis (Contoh: O₂, H₂, N₂, O₃). <br>
+                            • <strong>Molekul Senyawa:</strong> Penggabungan atom-atom yang berbeda jenis (Contoh: Air H₂O, Karbon Dioksida CO₂, Garam Dapur NaCl). <br>
+                            • <strong>Senyawa Organik:</strong> Senyawa yang dominan tersusun atas karbon (C) dan hidrogen (H), berasal dari makhluk hidup, mudah terbakar (Contoh: Gula C₁₂H₂₂O₁₁, Alkohol).
+                        </p>
+                    </div>
+
+                    <!-- Campuran & Pemisahannya -->
+                    <div class="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-emerald-500">Kisi-Kisi 26, 27, 28, 29</span>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="p-1.5 bg-emerald-200 text-emerald-800 rounded-lg text-sm font-bold">3</span>
+                            <h4 class="font-serif text-xl text-emerald-900">Campuran & Pemisahan</h4>
+                        </div>
+
+                        <!-- Separations Visual Cards -->
+                        <div class="grid grid-cols-2 gap-2 mb-3">
+                            <div class="bg-white p-2 rounded-lg border border-emerald-100 text-center">
+                                <span class="text-[11px] font-bold text-emerald-800 block">Filtrasi (Saringan)</span>
+                                <span class="text-[9px] text-slate-400 block mt-0.5">Berdasarkan perbedaan ukuran partikel.</span>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg border border-emerald-100 text-center">
+                                <span class="text-[11px] font-bold text-emerald-800 block">Evaporasi</span>
+                                <span class="text-[9px] text-slate-400 block mt-0.5">Pemisahan zat padat terlarut dari cairan.</span>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg border border-emerald-100 text-center">
+                                <span class="text-[11px] font-bold text-emerald-800 block">Distilasi (Suling)</span>
+                                <span class="text-[9px] text-slate-400 block mt-0.5">Berdasarkan perbedaan titik didih.</span>
+                            </div>
+                            <div class="bg-white p-2 rounded-lg border border-emerald-100 text-center">
+                                <span class="text-[11px] font-bold text-emerald-800 block">Kromatografi</span>
+                                <span class="text-[9px] text-slate-400 block mt-0.5">Memisahkan warna tinta atau pigmen.</span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            • <strong>Campuran Homogen:</strong> Terlarut sempurna, komponennya tidak dapat dibedakan (Larutan sirup, air garam). <br>
+                            • <strong>Campuran Heterogen:</strong> Tidak menyatu sempurna, masih terlihat batas fasenya (Air kopi, air pasir, minyak & air). <br>
+                            • <strong>Aplikasi Pemisahan:</strong> Pembuatan garam menggunakan metode <strong>Evaporasi</strong>, penjernihan air minum dengan <strong>Filtrasi</strong>.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Struktur Bumi & Gunung Berapi -->
+        <div id="tab-bumi" class="tab-content hidden">
+            <div id="capture-bumi" class="bg-white rounded-3xl shadow-xl border border-amber-100 p-6 md:p-10 relative overflow-hidden">
+                <div class="absolute -top-3 left-12 w-32 h-10 bg-amber-200/50 backdrop-blur-sm -rotate-3 border-y border-dashed border-amber-300 shadow-sm z-10 flex items-center justify-center font-handwritten text-amber-800 text-lg">CHAPTER 4</div>
+
+                <div class="text-center border-b-2 border-dashed border-amber-100 pb-8 mt-4">
+                    <h2 class="font-serif text-4xl text-amber-900 italic">Struktur Bumi & Gunung Berapi</h2>
+                    <p class="font-handwritten text-2xl text-amber-600 mt-1">"Bumi adalah rumah dinamis yang terus bergerak"</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    <!-- Struktur Lapisan Bumi -->
+                    <div class="bg-amber-50/50 rounded-2xl p-6 border border-amber-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-amber-500">Kisi-Kisi 30, 31, 32</span>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="p-2 bg-amber-200 text-amber-800 rounded-xl text-lg font-bold">1</span>
+                            <h3 class="font-serif text-2xl text-amber-900">Lapisan & Komponen Bumi</h3>
+                        </div>
+
+                        <!-- Earth Layer Cutout SVG -->
+                        <div class="bg-white rounded-xl p-4 shadow-inner border border-amber-100/60 mb-4 flex flex-col items-center">
+                            <span class="text-xs text-slate-400 mb-2">Irisan Struktur Lapisan Litosfer</span>
+                            <svg class="w-48 h-36" viewBox="0 0 200 150">
+                                <!-- Outer arc (Crust) -->
+                                <path d="M 20 130 A 100 100 0 0 1 180 130 L 100 10 Z" fill="#b45309" stroke="#78350f" stroke-width="2"/>
+                                <!-- Mantle -->
+                                <path d="M 40 130 A 80 80 0 0 1 160 130 L 100 10 Z" fill="#f97316"/>
+                                <!-- Outer Core -->
+                                <path d="M 65 130 A 50 50 0 0 1 135 130 L 100 10 Z" fill="#facc15"/>
+                                <!-- Inner Core -->
+                                <path d="M 85 130 A 20 20 0 0 1 115 130 L 100 10 Z" fill="#fffbeb"/>
+                                
+                                <!-- Pointer Labels -->
+                                <text x="110" y="125" class="text-[8px] font-bold fill-slate-800">1. Inti Dalam</text>
+                                <text x="110" y="100" class="text-[8px] font-bold fill-slate-800">2. Inti Luar</text>
+                                <text x="115" y="65" class="text-[8px] font-bold fill-slate-800">3. Mantel Bumi</text>
+                                <text x="110" y="30" class="text-[8px] font-bold fill-white">4. Kerak Bumi</text>
+                            </svg>
+                            <span class="text-[10px] text-amber-700 font-semibold mt-1">Susunan Litosfer (Dari Dalam ke Luar)</span>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                            <li>🌎 <strong class="text-amber-900">3 Komponen Utama Bumi:</strong>
+                                <ul class="list-disc pl-5 space-y-1 text-xs mt-1">
+                                    <li><strong>Atmosfer:</strong> Selubung udara/gas pelindung bumi.</li>
+                                    <li><strong>Litosfer:</strong> Lapisan batuan padat / kulit bumi paling luar.</li>
+                                    <li><strong>Hidrosfer:</strong> Lapisan air (samudra, danau, sungai, es).</li>
+                                </ul>
+                            </li>
+                            <li>🌎 <strong class="text-amber-900">Tenaga Geologi:</strong>
+                                <ul class="list-disc pl-5 space-y-1 text-xs mt-1">
+                                    <li><strong>Tenaga Endogen (Dari Dalam):</strong> Vulkanisme (gunung berapi), Tektonisme (pergeseran lempeng), Seisme (gempa).</li>
+                                    <li><strong>Tenaga Eksogen (Dari Luar):</strong> Erosi, Pelapukan, Sedimentasi.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Pergerakan Lempeng & Kebencanaan -->
+                    <div class="bg-amber-50/50 rounded-2xl p-6 border border-amber-100 relative">
+                        <span class="absolute top-2 right-4 text-xs font-mono text-amber-500">Kisi-Kisi 33 s.d 38</span>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="p-2 bg-amber-200 text-amber-800 rounded-xl text-lg font-bold">2</span>
+                            <h3 class="font-serif text-2xl text-amber-900">Lempeng Tektonik & Gempa</h3>
+                        </div>
+
+                        <!-- Interactive Tectonic Plate Slider -->
+                        <div class="bg-white rounded-xl p-4 shadow-inner border border-amber-100/60 mb-4">
+                            <span class="text-xs text-slate-400 block mb-2 text-center">Simulasi Pergerakan Lempeng</span>
+                            
+                            <div class="flex justify-between items-center bg-slate-100 p-2 rounded-lg mb-3">
+                                <button onclick="simulatePlate('konvergen')" class="flex-1 bg-amber-700 text-white text-[10px] py-1 rounded font-bold transition mx-0.5" id="pKonvergen">Konvergen (Tumbukan)</button>
+                                <button onclick="simulatePlate('divergen')" class="flex-1 bg-slate-200 text-slate-600 text-[10px] py-1 rounded font-bold transition mx-0.5" id="pDivergen">Divergen (Menjauh)</button>
+                                <button onclick="simulatePlate('transform')" class="flex-1 bg-slate-200 text-slate-600 text-[10px] py-1 rounded font-bold transition mx-0.5" id="pTransform">Sesar (Berpapasan)</button>
+                            </div>
+
+                            <!-- Animated Plate Simulation Area -->
+                            <div class="h-24 bg-sky-100 rounded-lg overflow-hidden flex items-end justify-center relative border border-slate-200" id="plateContainer">
+                                <!-- Default Konvergen View -->
+                                <div class="flex items-end w-full px-4 justify-between" id="plateGraphic">
+                                    <div class="w-1/2 bg-amber-800 h-10 border-t-4 border-emerald-600 relative flex justify-end items-center text-white text-[10px] font-bold pr-2 rounded-t-sm animate-pulse">Lempeng A ➔</div>
+                                    <div class="w-1/2 bg-amber-900 h-14 border-t-4 border-emerald-700 relative flex justify-start items-center text-white text-[10px] font-bold pl-2 rounded-t-sm">◀ Lempeng B</div>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-slate-500 block text-center mt-2 font-semibold" id="plateDesc">Konvergen: Lempeng saling mendekat, menyebabkan lipatan pegunungan & palung laut.</span>
+                        </div>
+
+                        <ul class="space-y-3 text-sm text-slate-700 leading-relaxed">
+                            <li>🌋 <strong class="text-amber-900">Jenis Gempa:</strong> Gempa **Tektonik** (pergeseran lempeng) dan Gempa **Vulkanik** (aktivitas gunung api).</li>
+                            <li>🌋 <strong class="text-amber-900">Istilah Gempa Bumi:</strong>
+                                <ul class="list-disc pl-5 space-y-1 text-xs mt-1">
+                                    <li><strong>Hiposentrum:</strong> Pusat gempa yang berada jauh di dalam perut bumi.</li>
+                                    <li><strong>Episentrum:</strong> Pusat gempa yang berada di permukaan bumi (sejajar di atas hiposentrum).</li>
+                                </ul>
+                            </li>
+                            <li>🌋 <strong class="text-amber-900">Manfaat Gunung Berapi:</strong> Menyuburkan tanah berkat abu vulkanik, sumber energi panas bumi (geotermal), sumber mata pencaharian pasir/batu, objek wisata alam.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Interactive Quiz Flashcards -->
+        <div id="tab-quiz" class="tab-content hidden">
+            <div class="bg-white rounded-3xl shadow-xl border border-pink-100 p-6 md:p-10 relative overflow-hidden">
+                <div class="absolute -top-3 left-12 w-32 h-10 bg-pink-200/50 backdrop-blur-sm -rotate-3 border-y border-dashed border-pink-300 shadow-sm z-10 flex items-center justify-center font-handwritten text-pink-800 text-lg">QUIZ TIME</div>
+
+                <div class="text-center border-b-2 border-dashed border-pink-100 pb-8 mt-4">
+                    <h2 class="font-serif text-4xl text-pink-900 italic">Mental Gym: Flashcards</h2>
+                    <p class="font-handwritten text-2xl text-pink-600 mt-1">"Asah ingatanmu untuk mencetak nilai 100 sempurna!"</p>
+                </div>
+
+                <!-- Flashcard Widget -->
+                <div class="max-w-md mx-auto mt-10">
+                    <div class="relative h-64 w-full cursor-pointer group perspective" onclick="flipCard()">
+                        <!-- The Inner Container that handles the flip animation -->
+                        <div id="flashcard-inner" class="relative w-full h-full transition-transform duration-500 transform-style-3d bg-pink-50 rounded-2xl border-2 border-pink-200 shadow-lg flex flex-col justify-between p-6">
+                            
+                            <!-- Front Side of Card -->
+                            <div class="absolute inset-0 backface-hidden flex flex-col justify-between p-6 bg-pink-50 rounded-2xl">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-pink-500 uppercase tracking-widest" id="quiz-chapter">Chapter: Bunyi</span>
+                                    <span class="text-xs bg-pink-200 text-pink-800 px-2 py-0.5 rounded-full font-bold" id="quiz-number">1 / 5</span>
+                                </div>
+                                <div class="my-auto text-center">
+                                    <p class="text-lg md:text-xl font-serif text-slate-800" id="quiz-question">Manusia hanya bisa mendengar bunyi dengan frekuensi...</p>
+                                </div>
+                                <div class="text-center text-xs text-slate-400 font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-rotate"></i> Klik untuk melihat jawaban
+                                </div>
+                            </div>
+
+                            <!-- Back Side of Card -->
+                            <div class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col justify-between p-6 bg-emerald-50 rounded-2xl border-2 border-emerald-200">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-emerald-500 uppercase tracking-widest">Kunci Jawaban</span>
+                                    <span class="text-[10px] bg-emerald-200 text-emerald-800 px-2 rounded-full font-bold">KISI-KISI PAS</span>
+                                </div>
+                                <div class="my-auto text-center px-4">
+                                    <p class="text-lg md:text-xl font-bold text-emerald-900" id="quiz-answer">AUDIOSONIK (20 Hz - 20.000 Hz)</p>
+                                </div>
+                                <div class="text-center text-[10px] text-slate-400 font-semibold italic">
+                                    Gampang kan? Lanjut ke pertanyaan berikutnya!
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Flashcard Controls -->
+                    <div class="flex justify-between items-center mt-6 gap-4">
+                        <button onclick="prevCard()" class="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-left"></i> Sebelum
+                        </button>
+                        <button onclick="nextCard()" class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-xl text-sm font-semibold shadow-md shadow-pink-100 transition flex items-center gap-1">
+                            Lanjut <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-6 border-t border-slate-200/60 mt-10">
+        <p class="text-xs text-slate-400">Dibuat khusus untuk bahan belajar IPA Kelas 8 Genap. Good luck untuk ujianmu! ⭐</p>
+    </footer>
+
+    <!-- Style for Flashcards flip mechanics -->
+    <style>
+        .perspective {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+    </style>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Tab switching logic
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            // Show target
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('block');
+
+            // Reset navigation tab button classes
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-white text-slate-600 hover:bg-slate-50";
+            });
+
+            // Set styling for active tab button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if(tabId === 'tab-getaran') {
+                activeBtn.className = "tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-purple-100 text-purple-800 border-2 border-purple-200";
+            } else if(tabId === 'tab-cahaya') {
+                activeBtn.className = "tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-orange-100 text-orange-800 border-2 border-orange-200";
+            } else if(tabId === 'tab-unsur') {
+                activeBtn.className = "tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-emerald-100 text-emerald-800 border-2 border-emerald-200";
+            } else if(tabId === 'tab-bumi') {
+                activeBtn.className = "tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-amber-100 text-amber-800 border-2 border-amber-200";
+            } else if(tabId === 'tab-quiz') {
+                activeBtn.className = "tab-btn px-5 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-sm flex items-center gap-2 bg-pink-100 text-pink-800 border-2 border-pink-200";
+            }
+        }
+
+        // --- EXPORT TO IMAGE FUNCTION (Perfect for User request "berbentuk gambar") ---
+        function exportActiveNote() {
+            // Check currently active tab to see what to capture
+            let captureElementId = "";
+            let fileName = "catatan_ipa8_";
+            
+            if (document.getElementById('tab-getaran').classList.contains('block')) {
+                captureElementId = "capture-getaran";
+                fileName += "getaran_gelombang.png";
+            } else if (document.getElementById('tab-cahaya').classList.contains('block')) {
+                captureElementId = "capture-cahaya";
+                fileName += "cahaya_optik.png";
+            } else if (document.getElementById('tab-unsur').classList.contains('block')) {
+                captureElementId = "capture-unsur";
+                fileName += "unsur_campuran.png";
+            } else if (document.getElementById('tab-bumi').classList.contains('block')) {
+                captureElementId = "capture-bumi";
+                fileName += "struktur_bumi.png";
+            } else {
+                captureElementId = "capture-getaran"; // Fallback to first tab
+                fileName += "getaran_gelombang.png";
+            }
+
+            const element = document.getElementById(captureElementId);
+            
+            // Temporary styles to make it export perfectly high-res
+            const originalStyle = element.style.cssText;
+            element.style.transform = "scale(1)";
+            element.style.maxWidth = "1200px";
+            
+            html2canvas(element, {
+                scale: 2, // Double quality for crystal clear images
+                useCORS: true,
+                backgroundColor: "#ffffff",
+                logging: false
+            }).then(canvas => {
+                // Restore original styles
+                element.style.cssText = originalStyle;
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.download = fileName;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                console.error("Error exporting note to image: ", err);
+            });
+        }
+
+        // --- GETARAN: PENDULUM SIMULATOR ---
+        function swingBandul(type) {
+            const string = document.getElementById('pendulum-string');
+            const ball = document.getElementById('pendulum-ball');
+            
+            // Simple visual sequence using CSS transition
+            string.style.transition = "transform 0.4s ease-in-out";
+            ball.style.transition = "transform 0.4s ease-in-out";
+            
+            if(type === 'full') {
+                // Swing to A (Left)
+                string.style.transformOrigin = "100px 10px";
+                string.style.transform = "rotate(-30deg)";
+                ball.style.transformOrigin = "100px 10px";
+                ball.style.transform = "rotate(-30deg)";
+                
+                setTimeout(() => {
+                    // Swing to C (Right)
+                    string.style.transform = "rotate(30deg)";
+                    ball.style.transform = "rotate(30deg)";
+                }, 400);
+
+                setTimeout(() => {
+                    // Back to B (Center)
+                    string.style.transform = "rotate(0deg)";
+                    ball.style.transform = "rotate(0deg)";
+                }, 800);
+            } else {
+                // Half Swing: A to C
+                string.style.transformOrigin = "100px 10px";
+                string.style.transform = "rotate(-30deg)";
+                ball.style.transformOrigin = "100px 10px";
+                ball.style.transform = "rotate(-30deg)";
+                
+                setTimeout(() => {
+                    // Swing to C
+                    string.style.transform = "rotate(30deg)";
+                    ball.style.transform = "rotate(30deg)";
+                }, 400);
+            }
+        }
+
+        // --- GELOMBANG: WAVE CANVAS GENERATOR ---
+        let waveCanvas, ctx;
+        let animationFrameId;
+        let waveParams = {
+            freq: 2,
+            lambda: 100,
+            amplitude: 25,
+            phase: 0
+        };
+
+        window.addEventListener('load', () => {
+            waveCanvas = document.getElementById('waveCanvas');
+            ctx = waveCanvas.getContext('2d');
+            resizeWaveCanvas();
+            animateWave();
+            
+            window.addEventListener('resize', resizeWaveCanvas);
+        });
+
+        function resizeWaveCanvas() {
+            if(waveCanvas) {
+                waveCanvas.width = waveCanvas.parentElement.clientWidth;
+                waveCanvas.height = 100;
+            }
+        }
+
+        function updateWaveParams() {
+            const freqInput = document.getElementById('waveFreq');
+            const lambdaInput = document.getElementById('waveLambda');
+            
+            waveParams.freq = parseFloat(freqInput.value);
+            waveParams.lambda = parseFloat(lambdaInput.value);
+            
+            const speed = (waveParams.freq * waveParams.lambda).toFixed(0);
+            document.getElementById('waveResult').innerHTML = `Cepat Rambat (v) = f × λ = ${waveParams.freq} Hz × ${waveParams.lambda} m = <strong>${speed} m/s</strong>`;
+        }
+
+        function animateWave() {
+            if(!ctx) return;
+            ctx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+            
+            // Draw grid lines
+            ctx.strokeStyle = '#3b0764';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, waveCanvas.height/2);
+            ctx.lineTo(waveCanvas.width, waveCanvas.height/2);
+            ctx.stroke();
+
+            // Draw Sine wave
+            ctx.strokeStyle = '#c084fc';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x < waveCanvas.width; x++) {
+                // Wave formula: y = A * sin(k*x - omega*t)
+                const k = (2 * Math.PI) / waveParams.lambda;
+                const omega = 2 * Math.PI * (waveParams.freq / 100);
+                const y = waveCanvas.height/2 + waveParams.amplitude * Math.sin(k * x - waveParams.phase);
+                
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            // Update phase over time for running wave effect
+            waveParams.phase += (waveParams.freq * 0.05);
+            
+            animationFrameId = requestAnimationFrame(animateWave);
+        }
+
+
+        // --- CAHAYA: EYE KACAMATA SIMULATOR ---
+        function updateEyeSimulation() {
+            const condition = document.getElementById('eyeConditionSelect').value;
+            const useGlasses = document.getElementById('useGlasses').checked;
+            
+            const glassLens = document.getElementById('glassLens');
+            const glassLabel = document.getElementById('glassLabel');
+            const lightRay1 = document.getElementById('lightRay1');
+            const lightRay2 = document.getElementById('lightRay2');
+            const focusPoint = document.getElementById('focusPoint');
+
+            if(condition === 'normal') {
+                // Focus right on the retina wall (X = 215)
+                focusPoint.setAttribute('cx', '215');
+                lightRay1.setAttribute('d', 'M 10 30 L 90 30 L 215 60');
+                lightRay2.setAttribute('d', 'M 10 90 L 90 90 L 215 60');
+                
+                // Hide lens option
+                glassLens.setAttribute('opacity', '0');
+                glassLabel.style.opacity = '0';
+            } else if(condition === 'miopi') {
+                if(useGlasses) {
+                    // With correction: focuses back on retina (X = 215)
+                    focusPoint.setAttribute('cx', '215');
+                    lightRay1.setAttribute('d', 'M 10 30 Q 40 33 90 30 L 215 60');
+                    lightRay2.setAttribute('d', 'M 10 90 Q 40 87 90 90 L 215 60');
+                    
+                    // Show Concave corrective lens
+                    glassLens.setAttribute('opacity', '1');
+                    glassLens.setAttribute('d', 'M 40 40 Q 45 60 40 80 Q 35 60 40 80');
+                    glassLabel.textContent = "Kacamata Cekung (-)";
+                    glassLabel.style.opacity = '1';
+                } else {
+                    // No correction: focuses in front of retina (X = 170)
+                    focusPoint.setAttribute('cx', '170');
+                    lightRay1.setAttribute('d', 'M 10 30 L 90 30 L 170 60');
+                    lightRay2.setAttribute('d', 'M 10 90 L 90 90 L 170 60');
+                    
+                    glassLens.setAttribute('opacity', '0');
+                    glassLabel.style.opacity = '0';
+                }
+            } else if(condition === 'hipermetropi') {
+                if(useGlasses) {
+                    // With correction: focuses on retina (X = 215)
+                    focusPoint.setAttribute('cx', '215');
+                    lightRay1.setAttribute('d', 'M 10 30 Q 40 25 90 30 L 215 60');
+                    lightRay2.setAttribute('d', 'M 10 90 Q 40 95 90 90 L 215 60');
+                    
+                    // Show Convex corrective lens
+                    glassLens.setAttribute('opacity', '1');
+                    glassLens.setAttribute('d', 'M 40 40 Q 35 60 40 80 Q 45 60 40 80');
+                    glassLabel.textContent = "Kacamata Cembung (+)";
+                    glassLabel.style.opacity = '1';
+                } else {
+                    // No correction: focuses behind retina (X = 250)
+                    focusPoint.setAttribute('cx', '255');
+                    lightRay1.setAttribute('d', 'M 10 30 L 90 30 L 255 60');
+                    lightRay2.setAttribute('d', 'M 10 90 L 90 90 L 255 60');
+                    
+                    glassLens.setAttribute('opacity', '0');
+                    glassLabel.style.opacity = '0';
+                }
+            }
+        }
+
+
+        // --- UNSUR & MOLEKUL VIEWER ---
+        function selectMolecule(type) {
+            const molUnsurBtn = document.getElementById('molUnsurBtn');
+            const molSenyawaBtn = document.getElementById('molSenyawaBtn');
+            const viewer = document.getElementById('moleculeViewer');
+            const desc = document.getElementById('moleculeDesc');
+
+            if(type === 'unsur') {
+                molUnsurBtn.className = "flex-1 bg-emerald-600 text-white text-[10px] font-bold py-1 rounded transition";
+                molSenyawaBtn.className = "flex-1 bg-slate-100 text-slate-600 text-[10px] font-bold py-1 rounded transition";
+                
+                // Show O2 representation
+                viewer.innerHTML = `
+                    <div class="flex items-center gap-1">
+                        <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-xs shadow-md border-2 border-red-600">O</div>
+                        <div class="w-6 h-1 bg-slate-400"></div>
+                        <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-xs shadow-md border-2 border-red-600">O</div>
+                    </div>
+                `;
+                desc.innerHTML = `Contoh: Oksigen (O₂) - Gabungan atom <strong>SEJENIS</strong>.`;
+            } else {
+                molSenyawaBtn.className = "flex-1 bg-emerald-600 text-white text-[10px] font-bold py-1 rounded transition";
+                molUnsurBtn.className = "flex-1 bg-slate-100 text-slate-600 text-[10px] font-bold py-1 rounded transition";
+                
+                // Show H2O representation
+                viewer.innerHTML = `
+                    <div class="flex items-center gap-1">
+                        <div class="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center text-slate-700 font-bold text-[10px] shadow-sm border border-slate-400">H</div>
+                        <div class="w-4 h-1 bg-slate-400 rotate-12"></div>
+                        <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-xs shadow-md border-2 border-red-600">O</div>
+                        <div class="w-4 h-1 bg-slate-400 -rotate-12"></div>
+                        <div class="w-6 h-6 rounded-full bg-slate-300 flex items-center justify-center text-slate-700 font-bold text-[10px] shadow-sm border border-slate-400">H</div>
+                    </div>
+                `;
+                desc.innerHTML = `Contoh: Air (H₂O) - Gabungan atom <strong>BERBEDA JENIS</strong>.`;
+            }
+        }
+
+
+        // --- BUMI: TECTONIC PLATES SIMULATOR ---
+        function simulatePlate(type) {
+            const pKonvergen = document.getElementById('pKonvergen');
+            const pDivergen = document.getElementById('pDivergen');
+            const pTransform = document.getElementById('pTransform');
+            const container = document.getElementById('plateContainer');
+            const desc = document.getElementById('plateDesc');
+
+            // Reset buttons
+            pKonvergen.className = "flex-1 bg-slate-200 text-slate-600 text-[10px] py-1 rounded font-bold transition mx-0.5";
+            pDivergen.className = "flex-1 bg-slate-200 text-slate-600 text-[10px] py-1 rounded font-bold transition mx-0.5";
+            pTransform.className = "flex-1 bg-slate-200 text-slate-600 text-[10px] py-1 rounded font-bold transition mx-0.5";
+
+            if(type === 'konvergen') {
+                pKonvergen.className = "flex-1 bg-amber-700 text-white text-[10px] py-1 rounded font-bold transition mx-0.5";
+                container.innerHTML = `
+                    <div class="flex items-end w-full px-4 justify-between" id="plateGraphic">
+                        <div class="w-1/2 bg-amber-800 h-10 border-t-4 border-emerald-600 relative flex justify-end items-center text-white text-[10px] font-bold pr-2 rounded-t-sm animate-pulse">Lempeng A ➔</div>
+                        <div class="w-1/2 bg-amber-900 h-14 border-t-4 border-emerald-700 relative flex justify-start items-center text-white text-[10px] font-bold pl-2 rounded-t-sm">◀ Lempeng B</div>
+                    </div>
+                `;
+                desc.innerHTML = `<strong>Konvergen:</strong> Lempeng saling bertumbukan. Mengakibatkan terbentuknya palung laut dalam atau lipatan pegunungan tinggi (misal: Himalaya).`;
+            } else if(type === 'divergen') {
+                pDivergen.className = "flex-1 bg-amber-700 text-white text-[10px] py-1 rounded font-bold transition mx-0.5";
+                container.innerHTML = `
+                    <div class="flex items-end w-full px-4 justify-between relative" id="plateGraphic">
+                        <!-- Rising Magma from below -->
+                        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-12 bg-red-600 animate-bounce rounded-t-full flex items-center justify-center text-[8px] font-bold text-white">Magma</div>
+                        
+                        <div class="w-[40%] bg-amber-800 h-12 border-t-4 border-emerald-600 relative flex justify-start items-center text-white text-[10px] font-bold pl-2">◀ Lempeng A</div>
+                        <div class="w-[40%] bg-amber-800 h-12 border-t-4 border-emerald-600 relative flex justify-end items-center text-white text-[10px] font-bold pr-2">Lempeng B ➔</div>
+                    </div>
+                `;
+                desc.innerHTML = `<strong>Divergen:</strong> Lempeng saling menjauh. Magma panas dari mantel menyembur keluar di celah menjauh tersebut, membentuk kerak samudera baru.`;
+            } else if(type === 'transform') {
+                pTransform.className = "flex-1 bg-amber-700 text-white text-[10px] py-1 rounded font-bold transition mx-0.5";
+                container.innerHTML = `
+                    <div class="flex flex-col w-full px-4 justify-center gap-1 h-full" id="plateGraphic">
+                        <div class="w-3/4 bg-amber-800 h-8 border-y border-emerald-600 relative flex justify-end items-center text-white text-[10px] font-bold pr-2 rounded animate-pulse">◀ Lempeng A (Geser Kiri)</div>
+                        <div class="w-3/4 self-end bg-amber-900 h-8 border-y border-emerald-700 relative flex justify-start items-center text-white text-[10px] font-bold pl-2 rounded">Lempeng B (Geser Kanan) ➔</div>
+                    </div>
+                `;
+                desc.innerHTML = `<strong>Transform (Sesar):</strong> Lempeng saling bergesekan mendatar. Sangat rawan memicu gempa bumi dangkal berkekuatan destruktif (misal: Sesar San Andreas).`;
+            }
+        }
+
+
+        // --- FLASHCARD QUIZ STATE & CONTENT ---
+        const quizData = [
+            {
+                chapter: "Bunyi (Kisi-Kisi 11)",
+                q: "Rentang frekuensi bunyi yang dapat didengar secara normal oleh telinga manusia disebut...",
+                a: "AUDIOSONIK (20 Hz - 20.000 Hz)"
+            },
+            {
+                chapter: "Alat Optik (Kisi-Kisi 12)",
+                q: "Bagaimanakah letak jatuhnya bayangan pada penderita Miopi (rabun jauh) dan lensa apa solusinya?",
+                a: "Jatuh DI DEPAN RETINA. Solusinya: Lensa Cekung (Negatif / Konkaf)."
+            },
+            {
+                chapter: "Molekul & Senyawa (Kisi-Kisi 19)",
+                q: "Gas Oksigen (O₂) dan Ozon (O₃) dikelompokkan ke dalam jenis molekul apa?",
+                a: "MOLEKUL UNSUR (Karena terdiri atas penggabungan atom yang sejenis)."
+            },
+            {
+                chapter: "Litosfer (Kisi-Kisi 31)",
+                q: "Sebutkan susunan lapisan kulit bumi (Litosfer) dari paling dalam hingga ke paling luar!",
+                a: "Inti Dalam ➔ Inti Luar ➔ Mantel Bumi ➔ Kerak Bumi."
+            },
+            {
+                chapter: "Pemisahan Campuran (Kisi-Kisi 28)",
+                q: "Metode pemisahan campuran yang digunakan petani garam untuk memisahkan garam dari air laut adalah...",
+                a: "EVAPORASI / PENGUAPAN (Memisahkan zat padat terlarut dari pelarutnya)."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+
+        function renderQuizCard() {
+            const quiz = quizData[currentQuizIndex];
+            document.getElementById('quiz-chapter').textContent = quiz.chapter;
+            document.getElementById('quiz-number').textContent = `${currentQuizIndex + 1} / ${quizData.length}`;
+            document.getElementById('quiz-question').textContent = quiz.q;
+            document.getElementById('quiz-answer').textContent = quiz.a;
+
+            // Make sure card shows front side when rendering new question
+            const cardInner = document.getElementById('flashcard-inner');
+            cardInner.style.transform = "rotateY(0deg)";
+        }
+
+        function flipCard() {
+            const cardInner = document.getElementById('flashcard-inner');
+            if (cardInner.style.transform === "rotateY(180deg)") {
+                cardInner.style.transform = "rotateY(0deg)";
+            } else {
+                cardInner.style.transform = "rotateY(180deg)";
+            }
+        }
+
+        function nextCard() {
+            currentQuizIndex = (currentQuizIndex + 1) % quizData.length;
+            renderQuizCard();
+        }
+
+        function prevCard() {
+            currentQuizIndex = (currentQuizIndex - 1 + quizData.length) % quizData.length;
+            renderQuizCard();
+        }
+
+        // Initialize first quiz card
+        window.addEventListener('load', () => {
+            renderQuizCard();
+        });
+
+    </script>
+</body>
+</html>
