@@ -13,7 +13,7 @@
             --accent: #fbbf24;
         }
         body {
-            background-color: transparent; /* Agar transparan menyatu dengan Google Sites */
+            background-color: transparent;
             font-family: 'Inter', sans-serif;
             margin: 0;
         }
@@ -27,38 +27,30 @@
             cursor: pointer;
         }
 
-        /* Container yang responsif: memanjang di HP, 16:9 di Desktop */
+        /* 
+         * WADAH UTAMA 
+         * Mengalir natural, tidak ada lagi paksaan tinggi (aspect-ratio) 
+         */
         .app-container {
-            position: relative;
             width: 100%;
             background: white;
             border-radius: 1rem;
             box-shadow: 0 10px 30px -5px rgba(0, 0, 80, 0.2);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 85vh; /* Ruang vertikal ekstra di layar sentuh */
+            overflow: hidden; 
         }
         
-        @media (min-width: 768px) {
-            .app-container {
-                aspect-ratio: 16 / 9;
-                min-height: auto;
-                max-height: 90vh;
-            }
-        }
-        
+        /* 
+         * HALAMAN
+         * Menggunakan aliran dokumen standar. Tanpa 'position: absolute'
+         */
         .page {
             display: none;
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
             flex-direction: column;
-            padding: 1rem;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            padding: 1.5rem;
+            width: 100%;
         }
-        @media (min-width: 768px) {
-            .page { padding: 1.5rem; }
+        @media (max-width: 767px) {
+            .page { padding: 1rem; }
         }
         
         .page.active {
@@ -71,12 +63,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* SVG Wiring */
+        /* Elemen SVG */
         .wire { stroke: #475569; stroke-width: 6; fill: none; stroke-linecap: round; }
         .bulb-glass { stroke: #334155; stroke-width: 3; transition: fill 0.3s, filter 0.3s; }
         .glow { filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.9)); }
         
-        /* Electron Animation */
+        /* Animasi Elektron */
         @keyframes flowRight {
             from { transform: translateX(-20px); opacity: 0; }
             10% { opacity: 1; }
@@ -90,7 +82,7 @@
         }
 
         .btn-hover {
-            transition: all 0.2s;
+            transition: transform 0.2s, filter 0.2s;
         }
         .btn-hover:hover {
             transform: scale(1.03);
@@ -98,14 +90,13 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-2 md:p-8">
+<body class="min-h-screen flex items-start justify-center p-2 md:p-8">
 
-    <div class="w-full max-w-6xl mx-auto flex items-center justify-center">
-        <!-- Penggunaan .app-container menggantikan .aspect-16-9 -->
-        <div class="app-container w-full bg-white relative">
+    <div class="w-full max-w-5xl mx-auto flex items-start justify-center">
+        <div class="app-container">
             
             <!-- HALAMAN 1: PEMBUKA -->
-            <div id="page-intro" class="page active items-center justify-center text-center bg-navy text-white">
+            <div id="page-intro" class="page active items-center justify-center text-center bg-navy text-white min-h-[70vh]">
                 <div class="w-20 h-20 md:w-24 md:h-24 mb-6 rounded-full bg-white flex items-center justify-center shadow-lg">
                     <svg class="w-10 h-10 md:w-12 md:h-12 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
@@ -123,69 +114,64 @@
             </div>
 
             <!-- HALAMAN 2: PEMANTIK -->
-            <div id="page-pemantik" class="page items-center justify-center text-center bg-gray-50">
+            <div id="page-pemantik" class="page items-center justify-center text-center bg-gray-50 min-h-[70vh]">
                 <h2 class="text-2xl md:text-3xl font-bold text-navy mb-6">Pernahkah Kamu Memperhatikan?</h2>
                 
-                <div class="flex flex-col md:flex-row gap-4 md:gap-8 items-center justify-center w-full max-w-4xl mb-6 md:mb-8">
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-center w-full max-w-4xl mb-8">
                     <!-- Tiang Listrik -->
-                    <div class="bg-white p-4 md:p-6 rounded-2xl shadow-md w-full flex-1 border-t-4 border-navy">
-                        <svg viewBox="0 0 100 100" class="w-16 h-16 md:w-24 md:h-24 mx-auto mb-3 md:mb-4 text-gray-700">
-                            <!-- Tiang -->
+                    <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md w-full flex-1 border-t-4 border-navy flex flex-col items-center">
+                        <svg viewBox="0 0 100 100" class="w-20 h-20 md:w-24 md:h-24 mb-4 text-gray-700">
                             <rect x="45" y="20" width="10" height="80" fill="currentColor"/>
                             <rect x="20" y="25" width="60" height="8" fill="currentColor"/>
                             <circle cx="25" cy="20" r="5" fill="#64748b"/>
                             <circle cx="75" cy="20" r="5" fill="#64748b"/>
-                            <!-- Kabel tebal -->
                             <path d="M-10 20 Q 25 40 75 20" stroke="#1e293b" stroke-width="4" fill="none"/>
                             <path d="M25 20 Q 75 40 110 20" stroke="#1e293b" stroke-width="4" fill="none"/>
                         </svg>
                         <h3 class="font-bold text-lg md:text-xl mb-2">Kabel Tiang Listrik</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">Ukurannya sangat tebal dan terbuat dari pintalan logam aluminium atau tembaga padat.</p>
+                        <p class="text-gray-600 text-sm">Ukurannya sangat tebal dan terbuat dari pintalan logam aluminium atau tembaga padat.</p>
                     </div>
 
                     <!-- Charger HP -->
-                    <div class="bg-white p-4 md:p-6 rounded-2xl shadow-md w-full flex-1 border-t-4 border-yellow-400">
-                        <svg viewBox="0 0 100 100" class="w-16 h-16 md:w-24 md:h-24 mx-auto mb-3 md:mb-4 text-gray-700">
-                            <!-- Kepala Charger -->
+                    <div class="bg-white p-5 md:p-6 rounded-2xl shadow-md w-full flex-1 border-t-4 border-yellow-400 flex flex-col items-center">
+                        <svg viewBox="0 0 100 100" class="w-20 h-20 md:w-24 md:h-24 mb-4 text-gray-700">
                             <rect x="40" y="20" width="20" height="30" rx="3" fill="currentColor"/>
                             <rect x="45" y="10" width="4" height="10" fill="currentColor"/>
                             <rect x="51" y="10" width="4" height="10" fill="currentColor"/>
-                            <!-- Kabel Tipis -->
                             <path d="M50 50 Q 70 80 30 90 T 80 100" stroke="#1e293b" stroke-width="1.5" fill="none"/>
                         </svg>
                         <h3 class="font-bold text-lg md:text-xl mb-2">Kabel Charger</h3>
-                        <p class="text-gray-600 text-xs md:text-sm">Ukurannya kecil, lentur, dan di dalamnya terdapat serabut tembaga yang sangat halus.</p>
+                        <p class="text-gray-600 text-sm">Ukurannya kecil, lentur, dan di dalamnya terdapat serabut tembaga yang sangat halus.</p>
                     </div>
                 </div>
 
-                <p class="text-sm md:text-lg text-gray-800 max-w-3xl mb-6 font-medium bg-blue-100 p-4 rounded-xl">
+                <p class="text-sm md:text-lg text-gray-800 max-w-3xl mb-8 font-medium bg-blue-100 p-4 rounded-xl">
                     Mengapa ukuran kawatnya berbeda? Mengapa keduanya memakai bahan logam seperti tembaga? Mari kita temukan jawabannya di laboratorium virtual kita!
                 </p>
-                <button onclick="nav('page-exp1')" class="bg-navy text-white text-base md:text-lg font-bold py-3 px-8 md:px-10 rounded-full btn-hover shadow-lg flex-shrink-0">
+                <button onclick="nav('page-exp1')" class="bg-navy text-white text-base md:text-lg font-bold py-3 px-8 md:px-10 rounded-full btn-hover shadow-lg">
                     Masuk Laboratorium 1 &rarr;
                 </button>
             </div>
 
             <!-- HALAMAN 3: EKSPLORASI 1 (Sirkuit & Bahan) -->
             <div id="page-exp1" class="page bg-white">
-                <div class="flex flex-col md:flex-row justify-between md:items-center mb-2 gap-2">
+                <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
                     <h2 class="text-xl md:text-3xl font-bold text-navy">Eksplorasi 1: Sirkuit & Bahan Penghantar</h2>
-                    <span class="text-xs md:text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold self-start md:self-auto">Langkah 1 dari 3</span>
+                    <span class="text-xs md:text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold w-fit">Langkah 1 dari 3</span>
                 </div>
-                <p class="text-sm md:text-base text-gray-600 mb-4">Pilih material untuk menutup celah kabel. Amati apakah lampu bisa menyala!</p>
+                <p class="text-sm md:text-base text-gray-600 mb-6">Pilih material untuk menutup celah kabel. Amati apakah lampu bisa menyala!</p>
                 
-                <div class="flex flex-1 flex-col md:flex-row gap-4 md:gap-6 min-h-0">
-                    <div class="flex-1 bg-gray-50 rounded-2xl border-2 border-gray-200 flex flex-col items-center justify-center p-2 md:p-4 relative">
-                        <svg viewBox="0 0 400 250" class="w-full max-w-sm drop-shadow-lg">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Area Sirkuit -->
+                    <div class="w-full md:w-2/3 bg-gray-50 rounded-2xl border-2 border-gray-200 flex flex-col items-center justify-center p-4">
+                        <svg viewBox="0 0 400 250" class="w-full max-w-md drop-shadow-lg">
                             <path d="M100 130 L100 50 L300 50 L300 200 L250 200" class="wire" />
                             <path d="M100 170 L100 200 L150 200" class="wire" />
                             
-                            <!-- Baterai -->
                             <rect x="75" y="130" width="50" height="40" fill="#dc2626" rx="4" />
                             <rect x="75" y="130" width="15" height="40" fill="#1e293b" rx="4" />
                             <text x="105" y="157" fill="white" font-weight="bold" font-size="20">+</text>
                             
-                            <!-- Lampu -->
                             <rect x="285" y="50" width="30" height="15" fill="#94a3b8" rx="2"/>
                             <circle id="bulb1" cx="300" cy="30" r="25" class="bulb-glass" fill="#cbd5e1" />
                             <g id="rays1" class="hidden text-yellow-400" stroke="currentColor" stroke-width="4" stroke-linecap="round">
@@ -194,49 +180,49 @@
                                 <line x1="330" y1="5" x2="345" y2="-10" />
                             </g>
 
-                            <!-- Celah -->
                             <rect id="gap1" x="150" y="195" width="100" height="10" fill="transparent" rx="2" stroke-dasharray="4" stroke="#94a3b8" stroke-width="2"/>
                         </svg>
 
-                        <div id="status1" class="mt-4 w-full p-2 md:p-3 rounded-xl bg-white border border-gray-200 text-center flex items-center justify-center min-h-[3rem] md:min-h-[4rem]">
+                        <div id="status1" class="mt-6 w-full p-3 rounded-xl bg-white border border-gray-200 text-center">
                             <p class="text-sm md:text-base text-gray-500 font-medium">Sirkuit masih terbuka. Arus tidak mengalir.</p>
                         </div>
                     </div>
 
-                    <div class="w-full md:w-1/3 grid grid-cols-2 md:grid-cols-1 gap-2 md:gap-3 overflow-y-auto content-start">
-                        <button onclick="testMat('tembaga')" class="p-2 md:p-3 bg-white border-2 border-orange-400 rounded-xl hover:bg-orange-50 flex items-center gap-2 md:gap-3 text-left transition-colors">
-                            <div class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-orange-500 flex-shrink-0"></div>
+                    <!-- Area Tombol -->
+                    <div class="w-full md:w-1/3 flex flex-col gap-3">
+                        <button onclick="testMat('tembaga')" class="p-3 bg-white border-2 border-orange-400 rounded-xl hover:bg-orange-50 flex items-center gap-3 text-left transition-colors">
+                            <div class="w-6 h-6 rounded-full bg-orange-500 flex-shrink-0"></div>
                             <div>
                                 <div class="font-bold text-sm md:text-base text-gray-800">Tembaga</div>
-                                <div class="text-xs text-gray-500 hidden md:block">Logam kemerahan</div>
+                                <div class="text-xs text-gray-500">Logam kemerahan</div>
                             </div>
                         </button>
-                        <button onclick="testMat('karet')" class="p-2 md:p-3 bg-white border-2 border-pink-400 rounded-xl hover:bg-pink-50 flex items-center gap-2 md:gap-3 text-left transition-colors">
-                            <div class="w-5 h-5 md:w-6 md:h-6 rounded bg-pink-400 flex-shrink-0"></div>
+                        <button onclick="testMat('karet')" class="p-3 bg-white border-2 border-pink-400 rounded-xl hover:bg-pink-50 flex items-center gap-3 text-left transition-colors">
+                            <div class="w-6 h-6 rounded bg-pink-400 flex-shrink-0"></div>
                             <div>
                                 <div class="font-bold text-sm md:text-base text-gray-800">Karet</div>
-                                <div class="text-xs text-gray-500 hidden md:block">Bahan elastis</div>
+                                <div class="text-xs text-gray-500">Bahan elastis</div>
                             </div>
                         </button>
-                        <button onclick="testMat('besi')" class="p-2 md:p-3 bg-white border-2 border-gray-500 rounded-xl hover:bg-gray-100 flex items-center gap-2 md:gap-3 text-left transition-colors">
-                            <div class="w-5 h-5 md:w-6 md:h-6 rounded bg-gray-500 flex-shrink-0"></div>
+                        <button onclick="testMat('besi')" class="p-3 bg-white border-2 border-gray-500 rounded-xl hover:bg-gray-100 flex items-center gap-3 text-left transition-colors">
+                            <div class="w-6 h-6 rounded bg-gray-500 flex-shrink-0"></div>
                             <div>
                                 <div class="font-bold text-sm md:text-base text-gray-800">Paku Besi</div>
-                                <div class="text-xs text-gray-500 hidden md:block">Logam abu-abu</div>
+                                <div class="text-xs text-gray-500">Logam abu-abu</div>
                             </div>
                         </button>
-                        <button onclick="testMat('kayu')" class="p-2 md:p-3 bg-white border-2 border-amber-800 rounded-xl hover:bg-amber-50 flex items-center gap-2 md:gap-3 text-left transition-colors">
-                            <div class="w-5 h-5 md:w-6 md:h-6 rounded bg-amber-800 flex-shrink-0"></div>
+                        <button onclick="testMat('kayu')" class="p-3 bg-white border-2 border-amber-800 rounded-xl hover:bg-amber-50 flex items-center gap-3 text-left transition-colors">
+                            <div class="w-6 h-6 rounded bg-amber-800 flex-shrink-0"></div>
                             <div>
                                 <div class="font-bold text-sm md:text-base text-gray-800">Kayu</div>
-                                <div class="text-xs text-gray-500 hidden md:block">Bahan organik</div>
+                                <div class="text-xs text-gray-500">Bahan organik</div>
                             </div>
                         </button>
                     </div>
                 </div>
                 
-                <div class="mt-4 text-right flex-shrink-0 pb-2">
-                    <button onclick="nav('page-exp2')" class="bg-navy text-white text-base md:text-lg font-semibold py-2 px-6 md:px-8 rounded-full btn-hover">
+                <div class="mt-8 pt-4 border-t border-gray-100 text-right">
+                    <button onclick="nav('page-exp2')" class="bg-navy text-white text-base md:text-lg font-semibold py-3 px-8 rounded-full btn-hover inline-block">
                         Lanjut: Kuat Arus &rarr;
                     </button>
                 </div>
@@ -244,23 +230,24 @@
 
             <!-- HALAMAN 4: EKSPLORASI 2 (Kuat Arus) -->
             <div id="page-exp2" class="page bg-white">
-                <div class="flex flex-col md:flex-row justify-between md:items-center mb-2 gap-2">
+                <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
                     <h2 class="text-xl md:text-3xl font-bold text-navy">Eksplorasi 2: Derasnya Kuat Arus</h2>
-                    <span class="text-xs md:text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold self-start md:self-auto">Langkah 2 dari 3</span>
+                    <span class="text-xs md:text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold w-fit">Langkah 2 dari 3</span>
                 </div>
-                <p class="text-sm md:text-base text-gray-600 mb-4 md:mb-6">Kuat Arus (I) adalah besarnya muatan (Q) yang mengalir tiap satuan waktu (t). Atur slider di bawah!</p>
+                <p class="text-sm md:text-base text-gray-600 mb-6">Kuat Arus (I) adalah besarnya muatan (Q) yang mengalir tiap satuan waktu (t). Atur slider di bawah!</p>
                 
-                <div class="flex flex-1 flex-col lg:flex-row gap-4 md:gap-8 min-h-0">
-                    <div class="flex-1 bg-gray-50 p-4 md:p-6 rounded-2xl border-2 border-gray-200">
-                        <div class="mb-6 md:mb-8">
-                            <label class="flex justify-between font-bold text-sm md:text-base text-gray-800 mb-2 md:mb-3">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Area Slider -->
+                    <div class="w-full lg:w-1/2 bg-gray-50 p-5 md:p-6 rounded-2xl border-2 border-gray-200 flex flex-col justify-center">
+                        <div class="mb-8">
+                            <label class="flex justify-between font-bold text-sm md:text-base text-gray-800 mb-3">
                                 <span>Muatan Listrik (Q)</span>
                                 <span class="text-blue-600"><span id="val-q">10</span> Coulomb (C)</span>
                             </label>
                             <input type="range" id="slide-q" min="1" max="20" value="10" class="w-full h-2 bg-blue-200 rounded-lg" oninput="calcI()">
                         </div>
                         <div>
-                            <label class="flex justify-between font-bold text-sm md:text-base text-gray-800 mb-2 md:mb-3">
+                            <label class="flex justify-between font-bold text-sm md:text-base text-gray-800 mb-3">
                                 <span>Waktu (t)</span>
                                 <span class="text-red-600"><span id="val-t">2</span> Sekon (s)</span>
                             </label>
@@ -268,11 +255,12 @@
                         </div>
                     </div>
 
-                    <div class="flex-1 flex flex-col items-center justify-center bg-navy text-white rounded-2xl p-4 md:p-6 relative">
-                        <div class="text-center z-10 w-full mb-4 md:mb-6">
-                            <div class="text-2xl md:text-4xl font-mono font-bold mb-2">I = <span class="text-blue-300">Q</span> / <span class="text-red-300">t</span></div>
-                            <div class="text-lg md:text-2xl font-mono text-gray-300 mb-4">I = <span id="eq-q" class="text-blue-300">10</span> / <span id="eq-t" class="text-red-300">2</span></div>
-                            <div class="bg-white text-navy p-2 md:p-3 rounded-xl inline-block shadow-lg border-2 border-yellow-400">
+                    <!-- Area Visualisasi -->
+                    <div class="w-full lg:w-1/2 flex flex-col items-center justify-center bg-navy text-white rounded-2xl p-6">
+                        <div class="text-center w-full mb-8">
+                            <div class="text-2xl md:text-3xl font-mono font-bold mb-2">I = <span class="text-blue-300">Q</span> / <span class="text-red-300">t</span></div>
+                            <div class="text-lg md:text-xl font-mono text-gray-300 mb-4">I = <span id="eq-q" class="text-blue-300">10</span> / <span id="eq-t" class="text-red-300">2</span></div>
+                            <div class="bg-white text-navy p-3 rounded-xl inline-block shadow-lg border-2 border-yellow-400">
                                 <span class="text-base md:text-xl font-bold">I = </span>
                                 <span id="val-i" class="text-2xl md:text-4xl font-black text-yellow-500">5.00</span>
                                 <span class="text-base md:text-xl font-bold"> Ampere (A)</span>
@@ -280,21 +268,19 @@
                         </div>
 
                         <!-- Visualisasi Pipa Elektron -->
-                        <div class="w-full mt-auto">
+                        <div class="w-full">
                             <p class="text-xs md:text-sm text-center mb-2 text-blue-200 font-semibold">Simulasi Kecepatan Elektron di Kawat:</p>
                             <svg viewBox="0 0 400 60" class="w-full bg-navy-light rounded-full overflow-hidden shadow-inner border border-blue-800">
-                                <!-- Kawat/Pipa -->
                                 <rect x="0" y="10" width="400" height="40" fill="#475569" />
                                 <rect x="0" y="20" width="400" height="20" fill="#94a3b8" />
-                                <!-- Particles Group -->
                                 <g id="electrons-group" fill="#fde047"></g>
                             </svg>
                         </div>
                     </div>
                 </div>
                 
-                <div class="mt-4 text-right flex-shrink-0 pb-2">
-                    <button onclick="nav('page-exp3')" class="bg-navy text-white text-base md:text-lg font-semibold py-2 px-6 md:px-8 rounded-full btn-hover">
+                <div class="mt-8 pt-4 border-t border-gray-100 text-right">
+                    <button onclick="nav('page-exp3')" class="bg-navy text-white text-base md:text-lg font-semibold py-3 px-8 rounded-full btn-hover inline-block">
                         Lanjut: Hambatan Kawat &rarr;
                     </button>
                 </div>
@@ -302,30 +288,31 @@
 
             <!-- HALAMAN 5: EKSPLORASI 3 (Hambatan Kawat) -->
             <div id="page-exp3" class="page bg-white">
-                <div class="flex flex-col md:flex-row justify-between md:items-center mb-2 gap-2">
+                <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-2">
                     <h2 class="text-xl md:text-3xl font-bold text-navy">Eksplorasi 3: Hambatan Kawat</h2>
-                    <span class="text-xs md:text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold self-start md:self-auto">Langkah 3 dari 3</span>
+                    <span class="text-xs md:text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold w-fit">Langkah 3 dari 3</span>
                 </div>
-                <p class="text-sm md:text-base text-gray-600 mb-4">Besarnya Hambatan (R) dipengaruhi oleh Hambatan Jenis (ρ), Panjang (L), dan Luas (A).</p>
+                <p class="text-sm md:text-base text-gray-600 mb-6">Besarnya Hambatan (R) dipengaruhi oleh Hambatan Jenis (ρ), Panjang (L), dan Luas (A).</p>
                 
-                <div class="flex flex-1 flex-col lg:flex-row gap-4 md:gap-6 min-h-0">
-                    <div class="w-full lg:w-5/12 bg-gray-50 p-4 rounded-2xl border-2 border-gray-200 overflow-y-auto">
-                        <div class="mb-4">
-                            <label class="flex justify-between font-bold text-gray-800 mb-2 text-xs md:text-sm">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Area Slider -->
+                    <div class="w-full lg:w-1/2 bg-gray-50 p-5 rounded-2xl border-2 border-gray-200">
+                        <div class="mb-5">
+                            <label class="flex justify-between font-bold text-gray-800 mb-2 text-sm md:text-base">
                                 <span>Hambatan Jenis (ρ)</span>
                                 <span class="text-purple-600"><span id="val-rho">0.02</span> Ωm</span>
                             </label>
                             <input type="range" id="slide-rho" min="0.01" max="0.10" step="0.01" value="0.02" class="w-full h-2 rounded-lg" oninput="calcR()">
                         </div>
-                        <div class="mb-4">
-                            <label class="flex justify-between font-bold text-gray-800 mb-2 text-xs md:text-sm">
+                        <div class="mb-5">
+                            <label class="flex justify-between font-bold text-gray-800 mb-2 text-sm md:text-base">
                                 <span>Panjang Kawat (L)</span>
                                 <span class="text-green-600"><span id="val-l">10</span> m</span>
                             </label>
                             <input type="range" id="slide-l" min="1" max="20" value="10" class="w-full h-2 rounded-lg" oninput="calcR()">
                         </div>
                         <div>
-                            <label class="flex justify-between font-bold text-gray-800 mb-2 text-xs md:text-sm">
+                            <label class="flex justify-between font-bold text-gray-800 mb-2 text-sm md:text-base">
                                 <span>Luas Penampang (A)</span>
                                 <span class="text-orange-600"><span id="val-a">5</span> mm²</span>
                             </label>
@@ -333,11 +320,12 @@
                         </div>
                     </div>
 
-                    <div class="w-full lg:w-7/12 flex flex-col items-center justify-center bg-navy text-white rounded-2xl p-4 relative">
-                        <div class="text-center z-10 w-full mb-4">
-                            <div class="text-xl md:text-3xl font-mono font-bold mb-1">R = ρ &times; (L / A)</div>
-                            <div class="text-base md:text-lg font-mono text-gray-300 mb-2">R = <span id="eq-rho" class="text-purple-300">0.02</span> &times; (<span id="eq-l" class="text-green-300">10</span> / <span id="eq-a" class="text-orange-300">5</span>)</div>
-                            <div class="bg-white text-navy px-3 md:px-4 py-2 rounded-xl inline-block shadow-lg">
+                    <!-- Area Visualisasi -->
+                    <div class="w-full lg:w-1/2 flex flex-col items-center justify-center bg-navy text-white rounded-2xl p-5">
+                        <div class="text-center w-full mb-6">
+                            <div class="text-xl md:text-2xl font-mono font-bold mb-2">R = ρ &times; (L / A)</div>
+                            <div class="text-base md:text-lg font-mono text-gray-300 mb-4">R = <span id="eq-rho" class="text-purple-300">0.02</span> &times; (<span id="eq-l" class="text-green-300">10</span> / <span id="eq-a" class="text-orange-300">5</span>)</div>
+                            <div class="bg-white text-navy px-4 py-3 rounded-xl inline-block shadow-lg">
                                 <span class="text-base md:text-lg font-bold">R = </span>
                                 <span id="val-r" class="text-xl md:text-3xl font-black text-yellow-500">0.04</span>
                                 <span class="text-base md:text-lg font-bold"> Ohm (Ω)</span>
@@ -345,9 +333,9 @@
                         </div>
 
                         <!-- Visualisasi Kawat -->
-                        <div class="w-full bg-white rounded-xl flex-1 flex items-center justify-center p-2 relative overflow-hidden min-h-[100px] md:min-h-[120px]">
-                            <span class="absolute top-1 left-2 text-[10px] md:text-xs font-bold text-gray-400">Tampak Samping Kawat</span>
-                            <svg viewBox="0 0 400 150" class="w-full h-full">
+                        <div class="w-full bg-white rounded-xl flex-1 flex items-center justify-center p-4 relative overflow-hidden min-h-[120px]">
+                            <span class="absolute top-2 left-2 text-[10px] md:text-xs font-bold text-gray-400">Tampak Samping Kawat</span>
+                            <svg viewBox="0 0 400 150" class="w-full h-full max-h-32">
                                 <rect id="wire-rect" x="50" y="65" width="150" height="20" fill="#b45309" rx="4" />
                                 <text id="wire-label-l" x="125" y="55" fill="#166534" font-size="12" font-weight="bold" text-anchor="middle">L memanjang &rarr;</text>
                                 <text id="wire-label-a" x="30" y="75" fill="#9a3412" font-size="12" font-weight="bold" transform="rotate(-90 30,75)" text-anchor="middle">A menebal &rarr;</text>
@@ -356,8 +344,8 @@
                     </div>
                 </div>
                 
-                <div class="mt-4 text-right flex-shrink-0 pb-2">
-                    <button onclick="nav('page-quiz'); initQuiz();" class="bg-yellow-400 text-navy text-sm md:text-lg font-bold py-3 px-6 md:px-8 rounded-full btn-hover shadow-md">
+                <div class="mt-8 pt-4 border-t border-gray-100 text-right">
+                    <button onclick="nav('page-quiz'); initQuiz();" class="bg-yellow-400 text-navy text-base md:text-lg font-bold py-3 px-8 rounded-full btn-hover shadow-md inline-block">
                         Mulai Latihan Uji Kemampuan &rarr;
                     </button>
                 </div>
@@ -365,21 +353,21 @@
 
             <!-- HALAMAN 6: KUIS -->
             <div id="page-quiz" class="page bg-white">
-                <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 border-b-2 border-gray-200 pb-2 gap-2">
+                <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 border-b-2 border-gray-100 pb-4 gap-2">
                     <h2 class="text-xl md:text-2xl font-bold text-navy">Latihan Pemahaman</h2>
-                    <div class="text-xs md:text-sm font-bold bg-navy text-yellow-400 py-1 px-4 rounded-full self-start md:self-auto">
+                    <div class="text-xs md:text-sm font-bold bg-navy text-yellow-400 py-1 px-4 rounded-full w-fit">
                         Soal <span id="quiz-num">1</span> dari 8
                     </div>
                 </div>
                 
-                <div class="flex-1 overflow-y-auto pr-2 pb-16">
-                    <p id="quiz-q" class="text-base md:text-xl font-bold text-gray-800 mb-4 md:mb-6"></p>
+                <div>
+                    <p id="quiz-q" class="text-base md:text-xl font-bold text-gray-800 mb-6"></p>
                     <div id="quiz-opts" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                        <!-- Options injected here -->
+                        <!-- Pilihan Jawaban Muncul Di Sini -->
                     </div>
                     
-                    <div id="quiz-feedback" class="mt-4 md:mt-6 p-3 md:p-4 rounded-xl hidden border-l-4">
-                        <div class="flex items-center gap-2 md:gap-3 mb-1">
+                    <div id="quiz-feedback" class="mt-6 p-4 rounded-xl hidden border-l-4">
+                        <div class="flex items-center gap-3 mb-2">
                             <span id="quiz-icon"></span>
                             <h3 id="quiz-title" class="text-lg md:text-xl font-bold"></h3>
                         </div>
@@ -387,31 +375,32 @@
                     </div>
                 </div>
 
-                <div class="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-white border-t border-gray-200 flex justify-end">
-                    <button id="btn-next" onclick="nextQuiz()" class="hidden bg-navy text-white text-base md:text-lg font-bold py-2 px-6 md:px-8 rounded-full btn-hover">
-                        Lanjut Soal
+                <!-- Tombol Lanjut Soal dipastikan ada di paling bawah normal dokumen flow -->
+                <div class="mt-8 pt-4 border-t border-gray-100 flex justify-end">
+                    <button id="btn-next" onclick="nextQuiz()" class="hidden bg-navy text-white text-base md:text-lg font-bold py-3 px-8 rounded-full btn-hover">
+                        Lanjut Soal &rarr;
                     </button>
                 </div>
             </div>
 
             <!-- HALAMAN 7: HASIL -->
-            <div id="page-result" class="page items-center justify-center text-center bg-navy text-white">
+            <div id="page-result" class="page items-center justify-center text-center bg-navy text-white min-h-[70vh]">
                 <h2 class="text-3xl md:text-4xl font-extrabold mb-2 text-yellow-400">Latihan Selesai!</h2>
                 <p class="text-base md:text-xl text-blue-200 mb-6">Berikut adalah skor akhirmu:</p>
                 
-                <div class="bg-white text-navy rounded-3xl p-6 md:p-8 mb-6 shadow-2xl relative w-full max-w-xl">
+                <div class="bg-white text-navy rounded-3xl p-6 md:p-8 mb-8 shadow-2xl relative w-full max-w-xl">
                     <div class="mx-auto bg-yellow-400 text-navy w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center border-4 border-white shadow-lg text-4xl md:text-5xl font-black mb-4">
                         <span id="final-score">0</span>
                     </div>
                     <h3 class="text-xl md:text-2xl font-bold mb-4" id="final-msg">Luar Biasa!</h3>
                     
-                    <div id="review-box" class="text-left bg-gray-50 border border-gray-200 p-3 md:p-4 rounded-xl hidden">
+                    <div id="review-box" class="text-left bg-gray-50 border border-gray-200 p-4 rounded-xl hidden">
                         <p class="font-bold text-red-600 mb-2 text-xs md:text-sm uppercase tracking-wide">Topik untuk dipelajari lagi:</p>
                         <ul id="review-list" class="list-disc list-inside text-gray-700 space-y-1 text-xs md:text-base font-medium"></ul>
                     </div>
                 </div>
 
-                <button onclick="nav('page-intro')" class="border-2 border-yellow-400 text-yellow-400 text-base md:text-lg font-bold py-3 px-8 md:px-10 rounded-full btn-hover hover:bg-yellow-400 hover:text-navy">
+                <button onclick="nav('page-intro')" class="border-2 border-yellow-400 text-yellow-400 text-base md:text-lg font-bold py-3 px-8 rounded-full btn-hover hover:bg-yellow-400 hover:text-navy">
                     Mulai Ulang dari Awal
                 </button>
             </div>
@@ -420,13 +409,14 @@
     </div>
 
     <script>
-        // -- Core Navigation --
         function nav(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            
+            // Otomatis scroll ke atas saat ganti halaman (penting untuk mobile)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // -- Eksplorasi 1: Sirkuit --
         const mats = {
             'tembaga': { color: '#f97316', cond: true, msg: 'Tembaga adalah Konduktor. Rangkaian tertutup, arus mengalir!' },
             'karet': { color: '#f472b6', cond: false, msg: 'Karet adalah Isolator. Menghambat arus, rangkaian tetap terputus.' },
@@ -447,18 +437,17 @@
                 b.setAttribute('fill', '#fde047');
                 b.classList.add('glow');
                 r.classList.remove('hidden');
-                s.className = 'mt-4 w-full p-2 md:p-3 rounded-xl border bg-green-50 border-green-400 text-center flex items-center justify-center min-h-[3rem] md:min-h-[4rem]';
+                s.className = 'mt-6 w-full p-3 rounded-xl border bg-green-50 border-green-400 text-center';
                 s.innerHTML = `<p class="text-green-800 text-sm md:text-base font-bold">${m.msg}</p>`;
             } else {
                 b.setAttribute('fill', '#cbd5e1');
                 b.classList.remove('glow');
                 r.classList.add('hidden');
-                s.className = 'mt-4 w-full p-2 md:p-3 rounded-xl border bg-red-50 border-red-400 text-center flex items-center justify-center min-h-[3rem] md:min-h-[4rem]';
+                s.className = 'mt-6 w-full p-3 rounded-xl border bg-red-50 border-red-400 text-center';
                 s.innerHTML = `<p class="text-red-800 text-sm md:text-base font-bold">${m.msg}</p>`;
             }
         }
 
-        // -- Eksplorasi 2: Kuat Arus --
         function calcI() {
             const q = parseFloat(document.getElementById('slide-q').value);
             const t = parseFloat(document.getElementById('slide-t').value);
@@ -490,7 +479,6 @@
         }
         calcI();
 
-        // -- Eksplorasi 3: Hambatan Kawat --
         function calcR() {
             const rho = parseFloat(document.getElementById('slide-rho').value);
             const l = parseFloat(document.getElementById('slide-l').value);
@@ -523,7 +511,6 @@
         }
         calcR();
 
-        // -- Latihan (Kuis) --
         const quizzes = [
             {
                 q: "Agar arus listrik dapat mengalir pada sebuah senter, kawat penghantarnya harus membentuk...",
@@ -658,6 +645,11 @@
             }
             
             document.getElementById('btn-next').classList.remove('hidden');
+            
+            // Scroll sedikit ke bawah otomatis agar tombol 'Lanjut' terlihat setelah menjawab
+            setTimeout(() => {
+                document.getElementById('btn-next').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
         }
 
         function showFb(isCorr, title, desc) {
